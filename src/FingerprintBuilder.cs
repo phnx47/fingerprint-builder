@@ -10,18 +10,16 @@ namespace FingerprintBuilder
     {
         private readonly Func<byte[], byte[]> _computeHash;
 
-        private readonly SortedDictionary<string, Func<T, object>> _fingerprints;
+        private readonly IDictionary<string, Func<T, object>> _fingerprints;
 
-        public FingerprintBuilder(Func<byte[], byte[]> computeHash)
+        internal FingerprintBuilder(Func<byte[], byte[]> computeHash)
         {
             _computeHash = computeHash ?? throw new ArgumentNullException(nameof(computeHash));
             _fingerprints = new SortedDictionary<string, Func<T, object>>(StringComparer.OrdinalIgnoreCase);
         }
 
-        public static IFingerprintBuilder<T> Create(Func<byte[], byte[]> computeHash)
-        {
-            return new FingerprintBuilder<T>(computeHash);
-        }
+        public static IFingerprintBuilder<T> Create(Func<byte[], byte[]> computeHash) =>
+            new FingerprintBuilder<T>(computeHash);
 
         public IFingerprintBuilder<T> For<TProperty>(Expression<Func<T, TProperty>> expression, Expression<Func<TProperty, string>> fingerprint)
         {
