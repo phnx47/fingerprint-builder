@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq.Expressions;
 using System.Runtime.Serialization.Formatters.Binary;
@@ -20,7 +21,10 @@ namespace FingerprintBuilder
 
         public static IFingerprintBuilder<T> Create(Func<byte[], byte[]> computeHash) =>
             new FingerprintBuilder<T>(computeHash);
-
+        
+        public IFingerprintBuilder<T> For<TProperty>(
+            Expression<Func<T, TProperty>> expression) => For(expression, _ =>  _.ToString());
+        
         public IFingerprintBuilder<T> For<TProperty>(Expression<Func<T, TProperty>> expression, Expression<Func<TProperty, string>> fingerprint)
         {
             if (!(expression.Body is MemberExpression memberExpression))
