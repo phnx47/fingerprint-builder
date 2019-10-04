@@ -6,7 +6,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 namespace FingerprintBuilder
 {
-    public class FingerprintBuilder<T>
+    public class FingerprintBuilder<T> : IFingerprintBuilder<T>
     {
         private readonly Func<byte[], byte[]> _computeHash;
 
@@ -15,22 +15,22 @@ namespace FingerprintBuilder
         public FingerprintBuilder(Func<byte[], byte[]> computeHash)
         {
             _computeHash = computeHash ?? throw new ArgumentNullException(nameof(computeHash));
-            _fingerprints = new SortedDictionary<string, Func<T, object>>(StringComparer.OrdinalIgnoreCase);    
+            _fingerprints = new SortedDictionary<string, Func<T, object>>(StringComparer.OrdinalIgnoreCase);
         }
 
-        public static FingerprintBuilder<T> Create(Func<byte[], byte[]> computeHash)
+        public static IFingerprintBuilder<T> Create(Func<byte[], byte[]> computeHash)
         {
             return new FingerprintBuilder<T>(computeHash);
         }
 
-        public FingerprintBuilder<T> For<TProperty>(Expression<Func<T, TProperty>> expression, Expression<Func<TProperty, string>> fingerprint)
+        public IFingerprintBuilder<T> For<TProperty>(Expression<Func<T, TProperty>> expression, Expression<Func<TProperty, string>> fingerprint)
         {
-            if (!(expression.Body is MemberExpression memberExpression ))
+            if (!(expression.Body is MemberExpression memberExpression))
                 throw new ArgumentException("Expression must be a member expression");
-            
+
             if (_fingerprints.ContainsKey(memberExpression.Member.Name))
                 throw new ArgumentException($"Member {memberExpression.Member.Name} has already been added.");
-            
+
             var getValue = expression.Compile();
             var getFingerprint = fingerprint.Compile();
 
@@ -53,7 +53,7 @@ namespace FingerprintBuilder
                 {
                     foreach (var item in _fingerprints)
                         binaryFormatter.Serialize(memory, item.Value(obj));
-                    
+
                     return _computeHash(memory.ToArray());
                 }
             };
