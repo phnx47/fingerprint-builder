@@ -2,6 +2,21 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FingerprintBuilder", "src\FingerprintBuilder.csproj", "{4A63DB87-276C-4FA9-A106-B62DDB222429}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{58083BD6-01D5-4CB8-92A3-06E0CF3D3F90}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{16A1A1CA-A6FB-4C13-AC2A-3545E7D510BD}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{695542BB-CD7D-4C7E-9209-B283CBE0EE5B}"
+ProjectSection(SolutionItems) = preProject
+	LICENSE = LICENSE
+	README.md = README.md
+	.gitattributes = .gitattributes
+	.gitignore = .gitignore
+	.editorconfig = .editorconfig
+EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FingerprintBuilder.Tests", "tests\FingerprintBuilder.Tests.csproj", "{5FC03E90-A152-4212-91F1-ED9BD7B947F1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +27,13 @@ Global
 		{4A63DB87-276C-4FA9-A106-B62DDB222429}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4A63DB87-276C-4FA9-A106-B62DDB222429}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4A63DB87-276C-4FA9-A106-B62DDB222429}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5FC03E90-A152-4212-91F1-ED9BD7B947F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5FC03E90-A152-4212-91F1-ED9BD7B947F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5FC03E90-A152-4212-91F1-ED9BD7B947F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5FC03E90-A152-4212-91F1-ED9BD7B947F1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{4A63DB87-276C-4FA9-A106-B62DDB222429} = {58083BD6-01D5-4CB8-92A3-06E0CF3D3F90}
+		{5FC03E90-A152-4212-91F1-ED9BD7B947F1} = {16A1A1CA-A6FB-4C13-AC2A-3545E7D510BD}
 	EndGlobalSection
 EndGlobal
