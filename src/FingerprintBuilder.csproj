@@ -2,17 +2,17 @@
   <PropertyGroup>
     <Description>Calculate fingerprint for an object</Description>
     <Copyright>2019 © Sergey Kuznetsov</Copyright>
-    <AssemblyTitle>FingerpringBuilder</AssemblyTitle>
+    <AssemblyTitle>FingerprintBuilder</AssemblyTitle>
     <VersionPrefix>0.2.0</VersionPrefix>
     <Authors>Sergey Kuznetsov</Authors>
     <TargetFrameworks>netstandard2.0;netstandard2.1</TargetFrameworks>
-    <AssemblyName>FingerpringBuilder</AssemblyName>
-    <PackageId>FingerpringBuilder</PackageId>
+    <AssemblyName>FingerprintBuilder</AssemblyName>
+    <PackageId>FingerprintBuilder</PackageId>
     <PackageTags>hash;function</PackageTags>
-    <PackageProjectUrl>https://github.com/phnx47/FingerpringBuilder</PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/phnx47/FingerprintBuilder</PackageProjectUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <RepositoryType>git</RepositoryType>
-    <RepositoryUrl>https://github.com/phnx47/FingerpringBuilder</RepositoryUrl>
+    <RepositoryUrl>https://github.com/phnx47/FingerprintBuilder</RepositoryUrl>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <NoWarn>1591</NoWarn>
   </PropertyGroup>
