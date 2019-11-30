@@ -23,9 +23,9 @@ namespace FingerprintBuilder
             new FingerprintBuilder<T>(computeHash);
         
         public IFingerprintBuilder<T> For<TProperty>(
-            Expression<Func<T, TProperty>> expression) => For(expression, _ =>  _.ToString());
+            Expression<Func<T, TProperty>> expression) => For(expression, _ =>  _);
         
-        public IFingerprintBuilder<T> For<TProperty>(Expression<Func<T, TProperty>> expression, Expression<Func<TProperty, string>> fingerprint)
+        public IFingerprintBuilder<T> For<TProperty>(Expression<Func<T, TProperty>> expression, Expression<Func<TProperty, TProperty>> fingerprint)
         {
             if (!(expression.Body is MemberExpression memberExpression))
                 throw new ArgumentException("Expression must be a member expression");
@@ -36,11 +36,11 @@ namespace FingerprintBuilder
             var getValue = expression.Compile();
             var getFingerprint = fingerprint.Compile();
 
-            _fingerprints[memberExpression.Member.Name] = obj =>
+            _fingerprints[memberExpression.Member.Name] = (Func<T, object>)(obj =>
             {
                 var value = getValue(obj);
-                return value == null ? "" : getFingerprint(value);
-            };
+                return value == null ? default : getFingerprint(getValue(obj));
+            });
 
             return this;
         }
