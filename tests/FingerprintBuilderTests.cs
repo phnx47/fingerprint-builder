@@ -16,13 +16,13 @@ namespace FingerprintBuilder.Tests
 
             var user = new UserInfo { FirstName = "John", LastName = "Smith" };
 
-            var hash = fingerprint(user).ToHexString();
+            var hash = fingerprint(user).ToLowerHexString();
 
             Assert.Equal("bfe2cb034d9448e66f642506e6370dd87bbbe0e0", hash);
         }
 
         [Fact]
-        public void UserInfo_IgnoreCase_Sha1()
+        public void UserInfo_ToLowerCase_Sha1()
         {
             var fingerprint = FingerprintBuilder<UserInfo>
                 .Create(SHA1.Create().ComputeHash)
@@ -32,15 +32,17 @@ namespace FingerprintBuilder.Tests
 
             var user = new UserInfo { FirstName = "John", LastName = "Smith" };
 
-            var hash = fingerprint(user).ToHexString();
+            const string expectedHash = "df7fd58e2378573dd2e6e7340a9b2390d2bda770";
+            
+            var hash = fingerprint(user).ToLowerHexString();
 
-            Assert.Equal("f747d848c4e4c6fab369e6a4d72e42d764036e98", hash);
+            Assert.Equal(expectedHash, hash);
 
             user.FirstName = user.FirstName.ToLowerInvariant();
             user.LastName = user.LastName.ToLowerInvariant();
 
-            var hash1 = fingerprint(user).ToHexString();
-            Assert.Equal("f747d848c4e4c6fab369e6a4d72e42d764036e98", hash1);
+            var hash1 = fingerprint(user).ToLowerHexString();
+            Assert.Equal(expectedHash, hash1);
         }
 
         [Fact]
@@ -54,13 +56,15 @@ namespace FingerprintBuilder.Tests
 
             var user = new UserInfo { FirstName = "John", LastName = "Smith" };
 
-            var hash = fingerprint(user).ToHexString();
+            var hashLower = fingerprint(user).ToLowerHexString();
+            var hashUpper = fingerprint(user).ToUpperHexString();
 
-            Assert.Equal("9996c4bbc1da4938144886b27b7c680e75932b5a56d911754d75ae4e0a9b4f1a", hash);
+            Assert.Equal("9996c4bbc1da4938144886b27b7c680e75932b5a56d911754d75ae4e0a9b4f1a", hashLower);
+            Assert.Equal("9996c4bbc1da4938144886b27b7c680e75932b5a56d911754d75ae4e0a9b4f1a".ToUpperInvariant(), hashUpper);
         }
 
         [Fact]
-        public void UserInfo_IgnoreCase_Sha256()
+        public void UserInfo_ToLowerCase_Sha256()
         {
             var fingerprint = FingerprintBuilder<UserInfo>
                 .Create(SHA256.Create().ComputeHash)
@@ -70,15 +74,17 @@ namespace FingerprintBuilder.Tests
 
             var user = new UserInfo { FirstName = "John", LastName = "Smith" };
 
-            var hash = fingerprint(user).ToHexString();
+            const string expectedHash = "6012fe3d8bd3038b701c9ddec210b591baecc3aa2ec1f727a7d1f3c9f2032cb3";
+            
+            var hash = fingerprint(user).ToLowerHexString();
 
-            Assert.Equal("74f20d0059ce864f9e8a4ad337a94dbfed3b00be9b04bbc01d12feec63eb645f", hash);
+            Assert.Equal(expectedHash, hash);
 
             user.FirstName = user.FirstName.ToLowerInvariant();
             user.LastName = user.LastName.ToLowerInvariant();
 
-            var hash1 = fingerprint(user).ToHexString();
-            Assert.Equal("74f20d0059ce864f9e8a4ad337a94dbfed3b00be9b04bbc01d12feec63eb645f", hash1);
+            var hash1 = fingerprint(user).ToLowerHexString();
+            Assert.Equal(expectedHash, hash1);
         }
 
         private class UserInfo
