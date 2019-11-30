@@ -1,4 +1,4 @@
-name: "Build and Publish to GitHub"
+name: "Build and Publish to MyGet"
 
 on:
   push:
@@ -19,3 +19,14 @@ jobs:
       run: dotnet build -c Release
     - name: Tests
       run: dotnet test -c Release --no-build
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Pack
+      run: dotnet pack src -c Release --include-symbols --include-source --version-suffix build-$(date +%Y%m%d%H%M%S) -o artifacts/
+    - name: Publish to MyGet
+      run: dotnet nuget push artifacts/*.nupkg --api-key ${{ secrets.MYGET_DEPLOY_KEY }} --source https://www.myget.org/F/phnx47-beta/api/v2/package
+    - name: Publish Symbols to MyGet
+      run: dotnet nuget push artifacts/*.symbols.nupkg --api-key ${{ secrets.MYGET_DEPLOY_KEY }} --source https://www.myget.org/F/phnx47-beta/symbols/api/v2/package
