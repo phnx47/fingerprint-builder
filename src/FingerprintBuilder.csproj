@@ -1,5 +1,21 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <Description>Calculate fingerprint for an object</Description>
+    <Copyright>2019 © Sergey Kuznetsov</Copyright>
+    <AssemblyTitle>FingerpringBuilder</AssemblyTitle>
+    <VersionPrefix>0.1.0</VersionPrefix>
+    <Authors>Sergey Kuznetsov</Authors>
+    <TargetFrameworks>netstandard2.0;netstandard2.1</TargetFrameworks>
+    <AssemblyName>FingerpringBuilder</AssemblyName>
+    <PackageId>FingerpringBuilder</PackageId>
+    <PackageTags>hash;function</PackageTags>
+    <PackageProjectUrl>https://github.com/phnx47/FingerpringBuilder</PackageProjectUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/phnx47/FingerpringBuilder</RepositoryUrl>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <NoWarn>1591</NoWarn>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
 </Project>
