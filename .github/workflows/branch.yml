@@ -5,7 +5,9 @@ on:
     branches:
       - '*/*'
       -  '*'
-      - '!master' 
+      - '!master'
+  tags:
+      - '!refs/tags/*' 
 
 jobs:
   build:

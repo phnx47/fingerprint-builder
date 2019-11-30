@@ -1,11 +1,11 @@
-name: "Build and Publish to MyGet"
+name: "Build and Publish to NuGet"
 
 on:
   push:
     branches:
       - master
     tags:
-      - '!refs/tags/*'
+      - v*
 
 jobs:
   build:
@@ -27,8 +27,8 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - name: Pack
-      run: dotnet pack src -c Release --include-symbols --include-source --version-suffix build-$(date +%Y%m%d%H%M%S) -o artifacts/
+      run: dotnet pack src -c Release --include-symbols --include-source -o artifacts/
     - name: Publish to MyGet
-      run: dotnet nuget push artifacts/*.nupkg --api-key ${{ secrets.MYGET_DEPLOY_KEY }} --source https://www.myget.org/F/phnx47-beta/api/v2/package
+      run: dotnet nuget push artifacts/*.nupkg --api-key ${{ secrets.NUGET_DEPLOY_KEY }} --source https://www.nuget.org/api/v2/package
     - name: Publish Symbols to MyGet
-      run: dotnet nuget push artifacts/*.symbols.nupkg --api-key ${{ secrets.MYGET_DEPLOY_KEY }} --source https://www.myget.org/F/phnx47-beta/symbols/api/v2/package
+      run: dotnet nuget push artifacts/*.symbols.nupkg --api-key ${{ secrets.NUGET_DEPLOY_KEY }} --source https://nuget.smbsrc.net/
