@@ -1,13 +1,15 @@
-name: Main workflow
+name: Build & Tests Branches
 
-on: [push, pull_request]
+on:
+  push:
+    branches:
+      - '*/*'
+      -  '*'
+      - '!master' 
 
 jobs:
   build:
-    runs-on: ${{ matrix.operating-system }}
-    strategy:
-      matrix:
-        operating-system: [ubuntu-latest, windows-latest, macos-latest]
+    runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v1
