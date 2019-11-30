@@ -6,8 +6,8 @@ on:
       - '*/*'
       -  '*'
       - '!master'
-  tags:
-      - '!refs/tags/*' 
+    tags:
+        - '!refs/tags/*' 
 
 jobs:
   build:
