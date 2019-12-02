@@ -22,10 +22,10 @@ namespace FingerprintBuilder
         public static IFingerprintBuilder<T> Create(Func<byte[], byte[]> computeHash) =>
             new FingerprintBuilder<T>(computeHash);
 
-        public IFingerprintBuilder<T> For<TProperty>(Expression<Func<T, TProperty>> expression) => 
+        public IFingerprintBuilder<T> For<TProperty>(Expression<Func<T, TProperty>> expression) =>
             For<TProperty>(expression, _ => _);
 
-        public IFingerprintBuilder<T> For<TProperty>(Expression<Func<T, TProperty>> expression, Expression<Func<TProperty, string>> fingerprint) => 
+        public IFingerprintBuilder<T> For<TProperty>(Expression<Func<T, TProperty>> expression, Expression<Func<TProperty, string>> fingerprint) =>
             For<TProperty, string>(expression, fingerprint);
 
         public IFingerprintBuilder<T> For<TProperty>(Expression<Func<T, TProperty>> expression, Expression<Func<TProperty, TProperty>> fingerprint)

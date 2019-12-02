@@ -8,11 +8,6 @@ namespace FingerprintBuilder
 {
     public static class FingerprintBuilderExtensions
     {
-        public static IFingerprintBuilder<T> For<T, TProperty>(this IFingerprintBuilder<T> builder, Expression<Func<T, TProperty>> expression)
-        {
-            return builder.For(expression, _ => _);
-        }
-
         public static IFingerprintBuilder<T> For<T>(this IFingerprintBuilder<T> builder, Expression<Func<T, string>> expression, bool toLowerCase, bool ignoreWhiteSpace)
         {
             var format = (Func<string, string>)(input =>
