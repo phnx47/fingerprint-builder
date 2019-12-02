@@ -22,30 +22,18 @@ namespace FingerprintBuilder
         public static IFingerprintBuilder<T> Create(Func<byte[], byte[]> computeHash) =>
             new FingerprintBuilder<T>(computeHash);
 
-        public IFingerprintBuilder<T> For<TProperty>(
-            Expression<Func<T, TProperty>> expression) => For(expression, _ => _);
+        public IFingerprintBuilder<T> For<TProperty>(Expression<Func<T, TProperty>> expression) => 
+            For<TProperty>(expression, _ => _);
 
-        public IFingerprintBuilder<T> For<TProperty>(Expression<Func<T, TProperty>> expression, Expression<Func<TProperty, string>> fingerprint)
-        {
-            if (!(expression.Body is MemberExpression memberExpression))
-                throw new ArgumentException("Expression must be a member expression");
-
-            if (_fingerprints.ContainsKey(memberExpression.Member.Name))
-                throw new ArgumentException($"Member {memberExpression.Member.Name} has already been added.");
-
-            var getValue = expression.Compile();
-            var getFingerprint = fingerprint.Compile();
-
-            _fingerprints[memberExpression.Member.Name] = obj =>
-            {
-                var value = getValue(obj);
-                return value == null ? default : getFingerprint(value);
-            };
-
-            return this;
-        }
+        public IFingerprintBuilder<T> For<TProperty>(Expression<Func<T, TProperty>> expression, Expression<Func<TProperty, string>> fingerprint) => 
+            For<TProperty, string>(expression, fingerprint);
 
         public IFingerprintBuilder<T> For<TProperty>(Expression<Func<T, TProperty>> expression, Expression<Func<TProperty, TProperty>> fingerprint)
+        {
+            return For<TProperty, TProperty>(expression, fingerprint);
+        }
+
+        private IFingerprintBuilder<T> For<TProperty, TPropertyVlaue>(Expression<Func<T, TProperty>> expression, Expression<Func<TProperty, TPropertyVlaue>> fingerprint)
         {
             if (!(expression.Body is MemberExpression memberExpression))
                 throw new ArgumentException("Expression must be a member expression");
