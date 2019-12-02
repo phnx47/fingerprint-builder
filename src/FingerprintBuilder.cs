@@ -21,10 +21,30 @@ namespace FingerprintBuilder
 
         public static IFingerprintBuilder<T> Create(Func<byte[], byte[]> computeHash) =>
             new FingerprintBuilder<T>(computeHash);
-        
+
         public IFingerprintBuilder<T> For<TProperty>(
-            Expression<Func<T, TProperty>> expression) => For(expression, _ =>  _);
-        
+            Expression<Func<T, TProperty>> expression) => For(expression, _ => _);
+
+        public IFingerprintBuilder<T> For<TProperty>(Expression<Func<T, TProperty>> expression, Expression<Func<TProperty, string>> fingerprint)
+        {
+            if (!(expression.Body is MemberExpression memberExpression))
+                throw new ArgumentException("Expression must be a member expression");
+
+            if (_fingerprints.ContainsKey(memberExpression.Member.Name))
+                throw new ArgumentException($"Member {memberExpression.Member.Name} has already been added.");
+
+            var getValue = expression.Compile();
+            var getFingerprint = fingerprint.Compile();
+
+            _fingerprints[memberExpression.Member.Name] = obj =>
+            {
+                var value = getValue(obj);
+                return value == null ? default : getFingerprint(value);
+            };
+
+            return this;
+        }
+
         public IFingerprintBuilder<T> For<TProperty>(Expression<Func<T, TProperty>> expression, Expression<Func<TProperty, TProperty>> fingerprint)
         {
             if (!(expression.Body is MemberExpression memberExpression))
@@ -36,11 +56,11 @@ namespace FingerprintBuilder
             var getValue = expression.Compile();
             var getFingerprint = fingerprint.Compile();
 
-            _fingerprints[memberExpression.Member.Name] = (Func<T, object>)(obj =>
+            _fingerprints[memberExpression.Member.Name] = obj =>
             {
                 var value = getValue(obj);
-                return value == null ? default : getFingerprint(getValue(obj));
-            });
+                return value == null ? default : getFingerprint(value);
+            };
 
             return this;
         }
