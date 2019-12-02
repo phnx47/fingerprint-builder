@@ -33,7 +33,7 @@ namespace FingerprintBuilder
             return For<TProperty, TProperty>(expression, fingerprint);
         }
 
-        private IFingerprintBuilder<T> For<TProperty, TPropertyVlaue>(Expression<Func<T, TProperty>> expression, Expression<Func<TProperty, TPropertyVlaue>> fingerprint)
+        private IFingerprintBuilder<T> For<TProperty, TPropertyType>(Expression<Func<T, TProperty>> expression, Expression<Func<TProperty, TPropertyType>> fingerprint)
         {
             if (!(expression.Body is MemberExpression memberExpression))
                 throw new ArgumentException("Expression must be a member expression");
