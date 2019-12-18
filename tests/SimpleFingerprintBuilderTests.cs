@@ -86,6 +86,22 @@ namespace FingerprintBuilder.Tests
             var hash1 = fingerprint(user).ToLowerHexString();
             Assert.Equal(expectedHash, hash1);
         }
+        
+        [Fact]
+        public void UserInfo_Sha1_Null()
+        {
+            var fingerprint = FingerprintBuilder<UserInfo>
+                .Create(SHA1.Create().ComputeHash)
+                .For(p => p.FirstName)
+                .For(p => p.LastName)
+                .Build();
+
+            var user = new UserInfo { FirstName = "John", LastName = null };
+
+            var hash = fingerprint(user).ToLowerHexString();
+
+            Assert.Equal("5ab5aeba11346413348fb7c9361058e016ecf3ca", hash);
+        }
 
         private class UserInfo
         {

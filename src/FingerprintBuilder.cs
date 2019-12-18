@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Runtime.Serialization.Formatters.Binary;
 
@@ -61,7 +62,11 @@ namespace FingerprintBuilder
                 using (var memory = new MemoryStream())
                 {
                     foreach (var item in _fingerprints)
-                        binaryFormatter.Serialize(memory, item.Value(obj));
+                    {
+                        var graph = item.Value(obj);
+                        if (graph != null)
+                            binaryFormatter.Serialize(memory, graph);
+                    }
 
                     return _computeHash(memory.ToArray());
                 }
