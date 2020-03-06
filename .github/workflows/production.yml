@@ -25,7 +25,7 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - name: Pack
-      run: dotnet pack src -c Release --include-symbols --include-source -o artifacts/
+      run: dotnet pack src -c Release -o artifacts/
     - name: Publish to NuGet
       run: dotnet nuget push artifacts/*.nupkg --api-key ${{ secrets.NUGET_DEPLOY_KEY }} --source https://www.nuget.org/api/v2/package
     - name: Publish Symbols to NuGet
