@@ -13,6 +13,7 @@ ProjectSection(SolutionItems) = preProject
 	.gitattributes = .gitattributes
 	.gitignore = .gitignore
 	.editorconfig = .editorconfig
+	nuget.config = nuget.config
 EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FingerprintBuilder.Tests", "tests\FingerprintBuilder.Tests.csproj", "{5FC03E90-A152-4212-91F1-ED9BD7B947F1}"
