@@ -27,7 +27,7 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - name: Pack
-      run: dotnet pack src -c Release --version-suffix build-$(date +%Y%m%d%H%M%S) -o artifacts/
+      run: dotnet pack src -c Release --version-suffix build-$(date +%Y%m%d%H%M) -o artifacts/
     - name: Publish to MyGet
       run: dotnet nuget push "artifacts/*.nupkg" --api-key ${{ secrets.MYGET_DEPLOY_KEY }} --source "myget"
     - name: Publish Symbols to MyGet
