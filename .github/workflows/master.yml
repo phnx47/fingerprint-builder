@@ -29,4 +29,6 @@ jobs:
     - name: Pack
       run: dotnet pack src -c Release --include-symbols --include-source --version-suffix build-$(date +%Y%m%d%H%M%S) -o artifacts/
     - name: Publish to MyGet
-      run: dotnet nuget push artifacts/*nupkg --api-key ${{ secrets.MYGET_DEPLOY_KEY }} --source https://www.myget.org/F/phnx47-beta/api/v2/package
+      run: dotnet nuget push artifacts/*.nupkg --api-key ${{ secrets.MYGET_DEPLOY_KEY }} --source https://www.myget.org/F/phnx47-beta/api/v3/index.json
+    - name: Publish Symbols to MyGet
+      run: dotnet nuget push artifacts/*.snupkg --api-key ${{ secrets.MYGET_DEPLOY_KEY }} --source https://www.myget.org/F/phnx47-beta/api/v3/index.json
