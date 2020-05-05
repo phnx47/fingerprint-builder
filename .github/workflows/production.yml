@@ -9,11 +9,14 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
+      - name: Checkout
+        uses: actions/checkout@v1
       - name: Setup .NET Core
         uses: actions/setup-dotnet@v1
         with:
-          dotnet-version: 3.1.103
+          source-url: https://api.nuget.org/v3/index.json
+        env:
+          NUGET_AUTH_TOKEN: ${{secrets.NUGET_DEPLOY_KEY}}
       - name: Build
         run: dotnet build -c Release
       - name: Tests
@@ -21,7 +24,7 @@ jobs:
       - name: Pack
         run: dotnet pack src -c Release  --no-build -o artifacts/
       - name: Publish to NuGet
-        run: dotnet nuget push "artifacts/*.nupkg" --api-key ${{ secrets.NUGET_DEPLOY_KEY }} --source "nuget"
+        run: dotnet nuget push "artifacts/*.nupkg"
       - name: Publish Symbols to NuGet
-        run: dotnet nuget push "artifacts/*.snupkg" --api-key ${{ secrets.NUGET_DEPLOY_KEY }} --source "nuget"
+        run: dotnet nuget push "artifacts/*.snupkg"
 
