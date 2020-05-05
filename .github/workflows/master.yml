@@ -24,6 +24,6 @@ jobs:
     - name: Tests
       run: dotnet test -c Release --no-build
     - name: Pack
-      run: dotnet pack src -c Release --no-build --version-suffix build-$(date +%Y%m%d%H%M) -o artifacts/
+      run: dotnet pack src -c Release --no-build --version-suffix dev-$(date +%s) -o artifacts/
     - name: Publish to GitHub
       run: dotnet nuget push "artifacts/*.nupkg" --skip-duplicate --no-symbols true
