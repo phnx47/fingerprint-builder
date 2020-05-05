@@ -1,4 +1,4 @@
-name: "Build & Tests Branches"
+name: "branch"
 
 on:
   push:
