@@ -7,8 +7,35 @@
 
 ## Installation
 
-```
+```sh
  dotnet add package FingerprintBuilder
+```
+
+## Use
+
+[Tests](https://github.com/phnx47/FingerprintBuilder/tree/master/tests)
+
+Declare class:
+```c#
+class UserInfo
+{
+    public string FirstName { get; set; }
+    public string LastName { get; set; }
+}
+```
+
+Configure Func:
+```c#
+var fingerprint = FingerprintBuilder<UserInfo>
+    .Create(SHA256.Create().ComputeHash)
+    .For(p => p.FirstName)
+    .For(p => p.LastName)
+    .Build();
+```
+Get hash:
+```c#
+var user = new UserInfo { FirstName = "John", LastName = "Smith" };
+var hash = fingerprint(user).ToLowerHexString(); // 9996c4bbc1da4938144886b27b7c680e75932b5a56d911754d75ae4e0a9b4f1a
 ```
 
 ## Contribute
