@@ -1,4 +1,4 @@
-name: "Build and Publish to MyGet"
+name: "Build and Publish to GitHub"
 
 on:
   push:
@@ -9,24 +9,15 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
-
-    steps:
-    - uses: actions/checkout@v1
-    - name: Setup .NET Core
-      uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: 3.1.101
-    - name: Build
-      run: dotnet build -c Release
-    - name: Tests
-      run: dotnet test -c Release --no-build
-  deploy:
     needs: build
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
+    - name: Build
+      run: dotnet build -c Release
+    - name: Tests
+      run: dotnet test -c Release --no-build
     - name: Pack
-      run: dotnet pack src -c Release --version-suffix build-$(date +%Y%m%d%H%M) -o artifacts/
+      run: dotnet pack src -c Release --no-build --version-suffix build-$(date +%Y%m%d%H%M) -o artifacts/
     - name: Publish to GitHub
-      run: dotnet nuget push "artifacts/*.nupkg" --skip-duplicate --no-symbols true --source "github"
+      run: dotnet nuget push "artifacts/*.nupkg" --api-key ${{ secrets.GH_DEPLOY_KEY }} --skip-duplicate --no-symbols true --source "github"
