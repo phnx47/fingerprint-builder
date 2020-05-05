@@ -11,7 +11,14 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+    - name: Checkout
     - uses: actions/checkout@v1
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        source-url: https://nuget.pkg.github.com/phnx47/index.json
+      env:
+        NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
     - name: Build
       run: dotnet build -c Release
     - name: Tests
@@ -19,4 +26,4 @@ jobs:
     - name: Pack
       run: dotnet pack src -c Release --no-build --version-suffix build-$(date +%Y%m%d%H%M) -o artifacts/
     - name: Publish to GitHub
-      run: dotnet nuget push "artifacts/*.nupkg" --api-key ${{ secrets.GH_DEPLOY_KEY }} --skip-duplicate --no-symbols true --source "github"
+      run: dotnet nuget push "artifacts/*.nupkg" --skip-duplicate --no-symbols true
