@@ -18,7 +18,7 @@ jobs:
       with:
         source-url: https://nuget.pkg.github.com/phnx47/index.json
       env:
-        NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+        NUGET_AUTH_TOKEN: ${{secrets.GH_DEPLOY_KEY}}
     - name: Build
       run: dotnet build -c Release
     - name: Tests
