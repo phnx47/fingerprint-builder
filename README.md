@@ -1,6 +1,6 @@
 # FingerprintBuilder
 
-![master](https://github.com/phnx47/FingerprintBuilder/workflows/master/badge.svg)
+[![master](https://github.com/phnx47/FingerprintBuilder/workflows/master/badge.svg)](https://github.com/phnx47/FingerprintBuilder/actions?query=workflow%3Amaster)
 [![NuGet](https://img.shields.io/nuget/v/FingerprintBuilder.svg)](https://www.nuget.org/packages/FingerprintBuilder)
 [![NuGet](https://img.shields.io/nuget/dt/FingerprintBuilder.svg)](https://www.nuget.org/packages/FingerprintBuilder)
 [![License MIT](https://img.shields.io/badge/license-MIT-green.svg)](https://opensource.org/licenses/MIT)
