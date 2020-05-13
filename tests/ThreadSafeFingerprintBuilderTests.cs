@@ -17,7 +17,7 @@ namespace FingerprintBuilder.Tests
                 .Build();
 
             var tasks = new List<Task>();
-            for (var p = 0; p < 1000; p++)
+            for (var p = 0; p < 100; p++)
             {
                 var task = Task.Run(() =>
                 {
