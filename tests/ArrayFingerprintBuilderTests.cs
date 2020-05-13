@@ -3,7 +3,7 @@ using Xunit;
 
 namespace FingerprintBuilder.Tests
 {
-    public class ArrayFingerprintBuilderTests
+    public partial class ArrayFingerprintBuilderTests
     {
         [Fact]
         public void UserInfo_Sha1()
@@ -36,11 +36,11 @@ namespace FingerprintBuilder.Tests
 
             Assert.Equal("9f825a64a3eb7a7f0b4887ce09ad2a76d085a8b0", hash);
         }
-
+        
         private class UserInfo
         {
             public string Name { get; set; }
-
+        
             public string[] Emails { get; set; }
         }
     }
