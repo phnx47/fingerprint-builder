@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Linq.Expressions;
 using System.Runtime.Serialization.Formatters.Binary;
 
@@ -10,10 +9,9 @@ namespace FingerprintBuilder
     public class FingerprintBuilder<T> : IFingerprintBuilder<T>
     {
         private readonly Func<byte[], byte[]> _computeHash;
-
         private readonly IDictionary<string, Func<T, object>> _fingerprints;
 
-        internal FingerprintBuilder(Func<byte[], byte[]> computeHash)
+        private FingerprintBuilder(Func<byte[], byte[]> computeHash)
         {
             _computeHash = computeHash ?? throw new ArgumentNullException(nameof(computeHash));
             _fingerprints = new SortedDictionary<string, Func<T, object>>(StringComparer.OrdinalIgnoreCase);
@@ -67,8 +65,9 @@ namespace FingerprintBuilder
                         if (graph != null)
                             binaryFormatter.Serialize(memory, graph);
                     }
-
-                    return _computeHash(memory.ToArray());
+                    var arr = memory.ToArray();
+                    lock (_computeHash)
+                        return _computeHash(arr);
                 }
             };
         }
