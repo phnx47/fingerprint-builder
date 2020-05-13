@@ -21,5 +21,3 @@ jobs:
         run: dotnet pack src -c Release --no-build -o artifacts/
       - name: Publish to NuGet
         run: dotnet nuget push "artifacts/*.nupkg" --api-key ${{ secrets.NUGET_DEPLOY_KEY }} --source https://api.nuget.org/v3/index.json
-      - name: Publish Symbols to NuGet
-        run: dotnet nuget push "artifacts/*.snupkg" --api-key ${{ secrets.NUGET_DEPLOY_KEY }} --source https://api.nuget.org/v3/index.json
