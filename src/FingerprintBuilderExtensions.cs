@@ -14,16 +14,16 @@ namespace FingerprintBuilder
             {
                 if (toLowerCase)
                     input = input.ToLowerInvariant();
-                
+
                 if (ignoreWhiteSpace)
                     input = input.Trim();
-                
+
                 return input;
             });
 
             return builder.For(expression, input => format(input));
         }
-        
+
         /// <summary>
         ///     Convert to LowerCase Hexadecimal string
         /// </summary>
@@ -31,7 +31,7 @@ namespace FingerprintBuilder
         {
             return source.ToString("x2");
         }
-        
+
         /// <summary>
         ///     Convert to LowerCase Hexadecimal string
         /// </summary>
@@ -39,15 +39,15 @@ namespace FingerprintBuilder
         {
             return source.ToString("X2");
         }
-        
+
         /// <summary>
         ///     Convert to string
         /// </summary>
         private static string ToString(this byte[] source, string format)
         {
-            if (source == null) 
+            if (source == null)
                 throw new ArgumentNullException(nameof(source));
-            
+
             return string.Join("", source.Select(ch => ch.ToString(format, CultureInfo.InvariantCulture)));
         }
     }

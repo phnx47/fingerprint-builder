@@ -4,10 +4,10 @@ on:
   push:
     branches:
       - '*/*'
-      -  '*'
+      - '*'
       - '!master'
     tags:
-        - '!refs/tags/*' 
+      - '!refs/tags/*'
 
 jobs:
   build:

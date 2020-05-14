@@ -131,12 +131,12 @@ namespace FingerprintBuilder.Tests
 
             Assert.Equal("5ab5aeba11346413348fb7c9361058e016ecf3ca", hash);
         }
+
         private class UserInfo
         {
             public string FirstName { get; set; }
-        
+
             public string LastName { get; set; }
         }
-        
     }
 }

@@ -3,6 +3,7 @@
 [![master](https://github.com/phnx47/FingerprintBuilder/workflows/master/badge.svg)](https://github.com/phnx47/FingerprintBuilder/actions?query=workflow%3Amaster)
 [![NuGet](https://img.shields.io/nuget/v/FingerprintBuilder.svg)](https://www.nuget.org/packages/FingerprintBuilder)
 [![NuGet](https://img.shields.io/nuget/dt/FingerprintBuilder.svg)](https://www.nuget.org/packages/FingerprintBuilder)
+[![CodeFactor](https://www.codefactor.io/repository/github/phnx47/fingerprintbuilder/badge/master)](https://www.codefactor.io/repository/github/phnx47/fingerprintbuilder/overview/master)
 [![License MIT](https://img.shields.io/badge/license-MIT-green.svg)](https://opensource.org/licenses/MIT)
 
 ## Installation

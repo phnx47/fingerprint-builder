@@ -65,6 +65,7 @@ namespace FingerprintBuilder
                         if (graph != null)
                             binaryFormatter.Serialize(memory, graph);
                     }
+
                     var arr = memory.ToArray();
                     lock (_computeHash)
                         return _computeHash(arr);
