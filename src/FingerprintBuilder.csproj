@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Description>Calculate fingerprint for an object</Description>
-    <Copyright>2020 © Sergey Kuznetsov</Copyright>
+    <Copyright>2019 © Sergey Kuznetsov</Copyright>
     <AssemblyTitle>FingerprintBuilder</AssemblyTitle>
     <VersionPrefix>0.6.0</VersionPrefix>
     <Authors>Sergey Kuznetsov</Authors>
