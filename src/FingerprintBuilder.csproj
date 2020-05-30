@@ -9,10 +9,10 @@
     <AssemblyName>FingerprintBuilder</AssemblyName>
     <PackageId>FingerprintBuilder</PackageId>
     <PackageTags>hash;function</PackageTags>
-    <PackageProjectUrl>https://github.com/phnx47/FingerprintBuilder</PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/phnx47/fingerprint-builder-net</PackageProjectUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <RepositoryType>git</RepositoryType>
-    <RepositoryUrl>https://github.com/phnx47/FingerprintBuilder</RepositoryUrl>
+    <RepositoryUrl>https://github.com/phnx47/fingerprint-builder-net</RepositoryUrl>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <IncludeSymbols>true</IncludeSymbols>
     <IncludeSource>true</IncludeSource>
