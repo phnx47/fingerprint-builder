@@ -1,10 +1,11 @@
-# FingerprintBuilder
+# fingerprint-builder-net
 
 [![master](https://github.com/phnx47/FingerprintBuilder/workflows/master/badge.svg)](https://github.com/phnx47/FingerprintBuilder/actions?query=workflow%3Amaster)
 [![NuGet](https://img.shields.io/nuget/v/FingerprintBuilder.svg)](https://www.nuget.org/packages/FingerprintBuilder)
 [![NuGet](https://img.shields.io/nuget/dt/FingerprintBuilder.svg)](https://www.nuget.org/packages/FingerprintBuilder)
-[![CodeFactor](https://www.codefactor.io/repository/github/phnx47/fingerprintbuilder/badge/master)](https://www.codefactor.io/repository/github/phnx47/fingerprintbuilder/overview/master)
+[![CodeFactor](https://www.codefactor.io/repository/github/phnx47/fingerprint-builder-net/badge/master)](https://www.codefactor.io/repository/github/phnx47/fingerprint-builder-net/overview/master)
 [![License MIT](https://img.shields.io/badge/license-MIT-green.svg)](https://opensource.org/licenses/MIT)
+
 
 ## Installation
 
@@ -67,6 +68,15 @@ Contributions to the package are always welcome!
 
 * Report any bugs or issues you find on the [issue tracker](https://github.com/phnx47/FingerprintBuilder/issues).
 * You can grab the source code at the package's [git repository](https://github.com/phnx47/FingerprintBuilder).
+
+## Support
+
+I would also very much appreciate your support:
+
+<a href="https://www.buymeacoffee.com/phnx47"><img width="32px" src="https://raw.githubusercontent.com/phnx47/files/master/button-sponsors/bmac0.png" alt="Buy Me A Coffee"></a>
+<a href="https://ko-fi.com/phnx47"><img width="32px" src="https://raw.githubusercontent.com/phnx47/files/master/button-sponsors/kofi0.png" alt="Support me on ko-fi"></a>
+<a href="https://www.patreon.com/phnx47"><img width="32px" src="https://raw.githubusercontent.com/phnx47/files/master/button-sponsors/patreon0.png" alt="Support me on Patreon"></a>
+
 
 ## License
 
