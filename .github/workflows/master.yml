@@ -9,7 +9,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
       - name: Checkout
         uses: actions/checkout@v1
@@ -23,7 +23,14 @@ jobs:
         run: dotnet build -c Release
       - name: Tests
         run: dotnet test -c Release --no-build
-      - name: Pack
+      - name: Pack artifacts
         run: dotnet pack src -c Release --no-build --version-suffix dev-$(date +%s) -o artifacts/
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: nupkg
+          path: artifacts/*
       - name: Publish to GitHub
-        run: dotnet nuget push "artifacts/*.nupkg" --skip-duplicate --no-symbols true
+        run: |
+          dotnet tool install -g gpr --no-cache -v q
+          gpr push "artifacts/*.nupkg" -k ${{ secrets.GH_PKG_WRITE }} || true
