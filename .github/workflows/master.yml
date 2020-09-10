@@ -32,4 +32,4 @@ jobs:
       - name: Publish to GitHub
         run: |
           dotnet tool install -g gpr --no-cache -v q
-          gpr push "artifacts/*.nupkg" -k ${{ secrets.GH_DEPLOY_KEY }} -s https://nuget.pkg.github.com/phnx47/index.json
+          gpr push "artifacts/*.nupkg" -k ${{ secrets.GH_DEPLOY_KEY }}
