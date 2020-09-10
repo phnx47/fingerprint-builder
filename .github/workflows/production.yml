@@ -8,6 +8,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-20.04
+    env:
+      DOTNET_NOLOGO: true
+      DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
     steps:
       - name: Checkout
         uses: actions/checkout@v1
