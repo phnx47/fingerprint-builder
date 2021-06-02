@@ -2,12 +2,8 @@ name: 💿 CI Branch
 
 on:
   push:
-    branches:
-      - '*/*'
-      - '*'
-      - '!master'
-    tags:
-      - '!refs/tags/*'
+    branches-ignore:
+      - "master"
 
 jobs:
   build-branch:
