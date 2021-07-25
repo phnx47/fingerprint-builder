@@ -1,4 +1,4 @@
-name: Auto Merge
+name: ☣ Auto Merge
 on:
   pull_request:
     types:
@@ -19,11 +19,11 @@ on:
   status: {}
 jobs:
   automerge:
+    name: 🛠 automerge
     runs-on: ubuntu-20.04
     steps:
-      - name: automerge
+      - name: ☢ automerge
         uses: pascalgn/automerge-action@v0.14.2
         env:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
-          MERGE_LABELS: "automerge,sync"
-          UPDATE_LABELS: "automerge,sync"
+          MERGE_RETRIES: "10"
