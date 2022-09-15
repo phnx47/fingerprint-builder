@@ -14,8 +14,6 @@
 
 ## Use
 
-[Tests](https://github.com/phnx47/fingerprint-builder-net/tree/master/tests)
-
 Declare class:
 
 ```c#
@@ -62,13 +60,6 @@ RunStrategy=Throughput  WarmupCount=10
 |   SHA1_Model_To_Hex | 4.303 μs | 0.0232 μs | 0.0639 μs | 4.178 μs | 4.475 μs | 4.300 μs |
 | SHA256_Model_To_Hex | 5.183 μs | 0.0526 μs | 0.1500 μs | 4.987 μs | 5.627 μs | 5.151 μs |
 | SHA512_Model_To_Hex | 6.842 μs | 0.0688 μs | 0.1908 μs | 6.626 μs | 7.470 μs | 6.795 μs |
-
-## Contribute
-
-Contributions to the package are always welcome!
-
-* Report any bugs or issues you find on the [issue tracker](https://github.com/phnx47/FingerprintBuilder/issues).
-* You can grab the source code at the package's [git repository](https://github.com/phnx47/FingerprintBuilder).
 
 ## License
 
