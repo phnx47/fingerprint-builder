@@ -2,9 +2,9 @@
   <PropertyGroup>
     <Description>Calculate fingerprint for an object</Description>
     <Copyright>2019 © Serge K</Copyright>
-    <VersionPrefix>1.0.0</VersionPrefix>
+    <VersionPrefix>2.0.0</VersionPrefix>
     <Authors>Serge K</Authors>
-    <TargetFrameworks>netstandard2.0;netstandard2.1</TargetFrameworks>
+    <TargetFramework>netstandard2.0</TargetFramework>
     <PackageId>FingerprintBuilder</PackageId>
     <PackageTags>hash;function</PackageTags>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
