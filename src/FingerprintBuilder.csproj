@@ -16,6 +16,7 @@
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <PackageIcon>icon.png</PackageIcon>
+    <PackageReadmeFile>../README.md</PackageReadmeFile>
     <NoWarn>1591</NoWarn>
   </PropertyGroup>
   <ItemGroup>
