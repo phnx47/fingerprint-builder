@@ -6,7 +6,7 @@
     <Authors>Serge K</Authors>
     <TargetFramework>netstandard2.0</TargetFramework>
     <PackageId>FingerprintBuilder</PackageId>
-    <PackageTags>hash;function</PackageTags>
+    <PackageTags>fingerprint;hash</PackageTags>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/phnx47/fingerprint-builder-net</RepositoryUrl>
