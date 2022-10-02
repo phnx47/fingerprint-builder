@@ -32,7 +32,7 @@ namespace FingerprintBuilder
         }
 
         /// <summary>
-        ///     Convert to LowerCase Hexadecimal string
+        ///     Convert to UpperCase Hexadecimal string
         /// </summary>
         public static string ToUpperHexString(this byte[] source)
         {
