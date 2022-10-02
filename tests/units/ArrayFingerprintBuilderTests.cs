@@ -3,7 +3,7 @@ using Xunit;
 
 namespace FingerprintBuilder.Tests
 {
-    public partial class ArrayFingerprintBuilderTests
+    public class ArrayFingerprintBuilderTests
     {
         [Fact]
         public void UserInfo_Sha1()

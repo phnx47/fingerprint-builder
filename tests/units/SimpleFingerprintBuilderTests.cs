@@ -1,19 +1,10 @@
-using System;
 using System.Security.Cryptography;
 using Xunit;
-using Xunit.Abstractions;
 
 namespace FingerprintBuilder.Tests
 {
     public class SimpleFingerprintBuilderTests
     {
-        private readonly ITestOutputHelper _testOutputHelper;
-
-        public SimpleFingerprintBuilderTests(ITestOutputHelper testOutputHelper)
-        {
-            _testOutputHelper = testOutputHelper;
-        }
-
         [Fact]
         public void UserInfo_Sha1()
         {
