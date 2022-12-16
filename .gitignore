@@ -1,7 +1,6 @@
 ﻿*.user
+*.opencover.xml
 
-.vs
-.vscode
 .idea
 
 bin
