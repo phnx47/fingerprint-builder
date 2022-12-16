@@ -1,10 +1,9 @@
 # fingerprint-builder-net
 
-[![CI](https://img.shields.io/github/workflow/status/phnx47/fingerprint-builder-net/%F0%9F%92%BF%20CI%20Master?label=CI&logo=github)](https://github.com/phnx47/fingerprint-builder-net/actions/workflows/master.yml)
-[![NuGet](https://img.shields.io/nuget/v/FingerprintBuilder.svg)](https://www.nuget.org/packages/FingerprintBuilder)
-[![NuGet](https://img.shields.io/nuget/dt/FingerprintBuilder.svg)](https://www.nuget.org/packages/FingerprintBuilder)
-[![CodeFactor](https://www.codefactor.io/repository/github/phnx47/fingerprint-builder-net/badge/master)](https://www.codefactor.io/repository/github/phnx47/fingerprint-builder-net/overview/master)
-[![License MIT](https://img.shields.io/badge/license-MIT-green.svg)](https://opensource.org/licenses/MIT)
+[![ci](https://img.shields.io/github/actions/workflow/status/phnx47/fingerprint-builder-net/ci.yml?branch=main&label=ci&logo=github&style=flat-square)](https://github.com/phnx47/fingerprint-builder-net/actions/workflows/ci.yml)
+[![nuget](https://img.shields.io/nuget/v/FingerprintBuilder?logo=nuget&style=flat-square)](https://www.nuget.org/packages/FingerprintBuilder)
+[![nuget](https://img.shields.io/nuget/dt/FingerprintBuilder?logo=nuget&style=flat-square)](https://www.nuget.org/packages/FingerprintBuilder)
+[![license](https://img.shields.io/github/license/phnx47/fingerprint-builder-net?style=flat-square)](LICENSE)
 
 ## Installation
 
@@ -44,14 +43,14 @@ var hash = fingerprint(user).ToLowerHexString(); // 9996c4bbc1da4938144886b27b7c
 ## Benchmarks
 
 ```ini
-BenchmarkDotNet=v0.12.1, OS=arch 
+BenchmarkDotNet=v0.12.1, OS=arch
 Intel Core i7-8565U CPU 1.80GHz (Whiskey Lake), 1 CPU, 8 logical and 4 physical cores
 .NET Core SDK=3.1.300
   [Host]     : .NET Core 3.1.4 (CoreCLR 4.700.20.20201, CoreFX 4.700.20.22101), X64 RyuJIT
   Job-PCQRMO : .NET Core 3.1.4 (CoreCLR 4.700.20.20201, CoreFX 4.700.20.22101), X64 RyuJIT
 
-Runtime=.NET Core 3.1  IterationCount=50  LaunchCount=2  
-RunStrategy=Throughput  WarmupCount=10  
+Runtime=.NET Core 3.1  IterationCount=50  LaunchCount=2
+RunStrategy=Throughput  WarmupCount=10
 ```
 
 |              Method |     Mean |     Error |    StdDev |      Min |      Max |   Median |
