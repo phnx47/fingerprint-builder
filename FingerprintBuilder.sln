@@ -23,11 +23,9 @@ ProjectSection(SolutionItems) = preProject
 EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{0859450E-9030-4C36-ABF0-5017F31718F5}"
-ProjectSection(SolutionItems) = preProject
-	.github\workflows\branch.yml = .github\workflows\branch.yml
-	.github\workflows\master.yml = .github\workflows\master.yml
-	.github\workflows\production.yml = .github\workflows\production.yml
-EndProjectSection
+	ProjectSection(SolutionItems) = preProject
+		.github\workflows\ci.yml = .github\workflows\ci.yml
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FingerprintBuilder.Tests", "tests\units\FingerprintBuilder.Tests.csproj", "{4D5DE776-DC77-4596-935A-C3833F149F4C}"
 EndProject
