@@ -7,7 +7,7 @@ using BenchmarkDotNet.Jobs;
 namespace FingerprintBuilder.BenchmarkTests
 {
     [MeanColumn, MinColumn, MaxColumn, MedianColumn]
-    [SimpleJob(RunStrategy.Throughput, RuntimeMoniker.NetCoreApp31, 2, 10, 50)]
+    [SimpleJob(RunStrategy.Throughput, RuntimeMoniker.Net70)]
     public class ModelToHex
     {
         private Func<UserInfo, byte[]> _md5;
@@ -25,25 +25,25 @@ namespace FingerprintBuilder.BenchmarkTests
                 FirstName = "John",
                 LastName = "Smith"
             };
-            
+
             _md5 = FingerprintBuilder<UserInfo>
                 .Create(MD5.Create().ComputeHash)
                 .For(p => p.FirstName)
                 .For(p => p.LastName)
                 .Build();
-            
+
             _sha1 = FingerprintBuilder<UserInfo>
                 .Create(SHA1.Create().ComputeHash)
                 .For(p => p.FirstName)
                 .For(p => p.LastName)
                 .Build();
-            
+
             _sha256 = FingerprintBuilder<UserInfo>
                 .Create(SHA256.Create().ComputeHash)
                 .For(p => p.FirstName)
                 .For(p => p.LastName)
                 .Build();
-            
+
             _sha512 = FingerprintBuilder<UserInfo>
                 .Create(SHA512.Create().ComputeHash)
                 .For(p => p.FirstName)
@@ -56,19 +56,19 @@ namespace FingerprintBuilder.BenchmarkTests
         {
             return _md5(_user).ToLowerHexString();
         }
-        
+
         [Benchmark]
         public string SHA1_Model_To_Hex()
         {
             return _sha1(_user).ToLowerHexString();
         }
-        
+
         [Benchmark]
         public string SHA256_Model_To_Hex()
         {
             return _sha256(_user).ToLowerHexString();
         }
-        
+
         [Benchmark]
         public string SHA512_Model_To_Hex()
         {

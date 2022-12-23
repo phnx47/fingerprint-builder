@@ -43,23 +43,23 @@ var hash = fingerprint(user).ToLowerHexString(); // 9996c4bbc1da4938144886b27b7c
 
 ## Benchmarks
 
-```ini
-BenchmarkDotNet=v0.12.1, OS=arch
-Intel Core i7-8565U CPU 1.80GHz (Whiskey Lake), 1 CPU, 8 logical and 4 physical cores
-.NET Core SDK=3.1.300
-  [Host]     : .NET Core 3.1.4 (CoreCLR 4.700.20.20201, CoreFX 4.700.20.22101), X64 RyuJIT
-  Job-PCQRMO : .NET Core 3.1.4 (CoreCLR 4.700.20.20201, CoreFX 4.700.20.22101), X64 RyuJIT
+``` ini
 
-Runtime=.NET Core 3.1  IterationCount=50  LaunchCount=2
-RunStrategy=Throughput  WarmupCount=10
+BenchmarkDotNet=v0.13.2, OS=arch
+Intel Core i7-8565U CPU 1.80GHz (Whiskey Lake), 1 CPU, 8 logical and 4 physical cores
+.NET SDK=7.0.101
+  [Host]     : .NET 7.0.1 (7.0.122.61501), X64 RyuJIT AVX2
+  Job-KTABYT : .NET 7.0.1 (7.0.122.61501), X64 RyuJIT AVX2
+
+Runtime=.NET 7.0  RunStrategy=Throughput
 ```
 
 |              Method |     Mean |     Error |    StdDev |      Min |      Max |   Median |
 |-------------------- |---------:|----------:|----------:|---------:|---------:|---------:|
-|    MD5_Model_To_Hex | 4.277 μs | 0.0763 μs | 0.2128 μs | 4.007 μs | 4.612 μs | 4.275 μs |
-|   SHA1_Model_To_Hex | 4.303 μs | 0.0232 μs | 0.0639 μs | 4.178 μs | 4.475 μs | 4.300 μs |
-| SHA256_Model_To_Hex | 5.183 μs | 0.0526 μs | 0.1500 μs | 4.987 μs | 5.627 μs | 5.151 μs |
-| SHA512_Model_To_Hex | 6.842 μs | 0.0688 μs | 0.1908 μs | 6.626 μs | 7.470 μs | 6.795 μs |
+|    MD5_Model_To_Hex | 2.124 μs | 0.0288 μs | 0.0240 μs | 2.095 μs | 2.181 μs | 2.120 μs |
+|   SHA1_Model_To_Hex | 2.308 μs | 0.0260 μs | 0.0230 μs | 2.281 μs | 2.364 μs | 2.301 μs |
+| SHA256_Model_To_Hex | 2.830 μs | 0.0375 μs | 0.0313 μs | 2.794 μs | 2.902 μs | 2.816 μs |
+| SHA512_Model_To_Hex | 4.276 μs | 0.0520 μs | 0.0461 μs | 4.229 μs | 4.384 μs | 4.259 μs |
 
 ## License
 

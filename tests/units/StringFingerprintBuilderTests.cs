@@ -1,19 +1,10 @@
-using System;
 using System.Security.Cryptography;
 using Xunit;
-using Xunit.Abstractions;
 
 namespace FingerprintBuilder.Tests
 {
-    public class SimpleFingerprintBuilderTests
+    public class StringFingerprintBuilderTests
     {
-        private readonly ITestOutputHelper _testOutputHelper;
-
-        public SimpleFingerprintBuilderTests(ITestOutputHelper testOutputHelper)
-        {
-            _testOutputHelper = testOutputHelper;
-        }
-
         [Fact]
         public void UserInfo_Sha1()
         {
@@ -27,7 +18,7 @@ namespace FingerprintBuilder.Tests
 
             var hash = fingerprint(user).ToLowerHexString();
 
-            Assert.Equal("bfe2cb034d9448e66f642506e6370dd87bbbe0e0", hash);
+            Assert.Equal("ac1992c8791c6ae5c8a2e8ed22feb109d86dc091", hash);
         }
 
         [Fact]
@@ -41,7 +32,7 @@ namespace FingerprintBuilder.Tests
 
             var user = new UserInfo { FirstName = "John", LastName = "Smith" };
 
-            const string expectedHash = "df7fd58e2378573dd2e6e7340a9b2390d2bda770";
+            const string expectedHash = "302ad30676be9e618daed716b3710ab70c1323db";
 
             var hash = fingerprint(user).ToLowerHexString();
 
@@ -68,8 +59,8 @@ namespace FingerprintBuilder.Tests
             var hashLower = fingerprint(user).ToLowerHexString();
             var hashUpper = fingerprint(user).ToUpperHexString();
 
-            Assert.Equal("9996c4bbc1da4938144886b27b7c680e75932b5a56d911754d75ae4e0a9b4f1a", hashLower);
-            Assert.Equal("9996c4bbc1da4938144886b27b7c680e75932b5a56d911754d75ae4e0a9b4f1a".ToUpperInvariant(), hashUpper);
+            Assert.Equal("62565a67bf16004038c502eb68907411fcf7871c66ee01a1aa274cc18d9fb541", hashLower);
+            Assert.Equal("62565a67bf16004038c502eb68907411fcf7871c66ee01a1aa274cc18d9fb541".ToUpperInvariant(), hashUpper);
         }
 
         [Fact]
@@ -83,7 +74,7 @@ namespace FingerprintBuilder.Tests
 
             var user = new UserInfo { FirstName = "John", LastName = "Smith" };
 
-            const string expectedHash = "6012fe3d8bd3038b701c9ddec210b591baecc3aa2ec1f727a7d1f3c9f2032cb3";
+            const string expectedHash = "fdd11c24f2c3f4cd9e57fbbdf77aa4c3332959fda1f6097a92d6e212aa2a533f";
 
             var hash = fingerprint(user).ToLowerHexString();
 
@@ -109,7 +100,7 @@ namespace FingerprintBuilder.Tests
 
             var hash = fingerprint(user).ToLowerHexString();
 
-            Assert.Equal("5ab5aeba11346413348fb7c9361058e016ecf3ca", hash);
+            Assert.Equal("2e2a2813f314668223c79f0bc819b39ce71810ca", hash);
         }
 
         [Fact]
@@ -126,8 +117,6 @@ namespace FingerprintBuilder.Tests
                 .For(p => p.FirstName1)
                 .For(p => p.LastName1)
                 .Build();
-
-            var user = new UserInfo { FirstName = "John", LastName = "Smith" };
 
             var hash = fingerprint(new UserInfo { FirstName = "John", LastName = "Smith" }).ToLowerHexString();
 

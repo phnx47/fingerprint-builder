@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Runtime.Serialization.Formatters.Binary;
 
@@ -10,6 +11,8 @@ namespace FingerprintBuilder
     {
         private readonly Func<byte[], byte[]> _computeHash;
         private readonly IDictionary<string, Func<T, object>> _fingerprints;
+
+        private readonly Type[] _supportedTypes = { typeof(bool), typeof(byte), typeof(string), typeof(double) };
 
         private FingerprintBuilder(Func<byte[], byte[]> computeHash)
         {
@@ -31,13 +34,17 @@ namespace FingerprintBuilder
             return For<TProperty, TProperty>(expression, fingerprint);
         }
 
-        private IFingerprintBuilder<T> For<TProperty, TPropertyType>(Expression<Func<T, TProperty>> expression, Expression<Func<TProperty, TPropertyType>> fingerprint)
+        private IFingerprintBuilder<T> For<TProperty, TReturnType>(Expression<Func<T, TProperty>> expression, Expression<Func<TProperty, TReturnType>> fingerprint)
         {
             if (!(expression.Body is MemberExpression memberExpression))
                 throw new ArgumentException("Expression must be a member expression");
 
             if (_fingerprints.ContainsKey(memberExpression.Member.Name))
-                throw new ArgumentException($"Member {memberExpression.Member.Name} has already been added.");
+                throw new ArgumentException($"Member {memberExpression.Member.Name} has already been added");
+
+            var returnType = typeof(TReturnType);
+            if (!_supportedTypes.Contains(typeof(TReturnType)))
+                throw new ArgumentException($"Unsupported Return Type: {returnType.Name}", memberExpression.Member.Name);
 
             var getValue = expression.Compile();
             var getFingerprint = fingerprint.Compile();
@@ -53,22 +60,42 @@ namespace FingerprintBuilder
 
         public Func<T, byte[]> Build()
         {
-            var binaryFormatter = new BinaryFormatter();
-
             return obj =>
             {
                 using (var memory = new MemoryStream())
                 {
-                    foreach (var item in _fingerprints)
+                    using (var binaryWriter = new BinaryWriter(memory))
                     {
-                        var graph = item.Value(obj);
-                        if (graph != null)
-                            binaryFormatter.Serialize(memory, graph);
-                    }
+                        foreach (var item in _fingerprints)
+                        {
+                            var graph = item.Value(obj);
+                            switch (graph)
+                            {
+                                case null:
+                                    continue;
+                                case bool b:
+                                    binaryWriter.Write(b);
+                                    break;
+                                case byte b:
+                                    binaryWriter.Write(b);
+                                    break;
+                                case string s:
+                                    binaryWriter.Write(s);
+                                    break;
+                                case double d:
+                                    binaryWriter.Write(d);
+                                    break;
 
-                    var arr = memory.ToArray();
-                    lock (_computeHash)
-                        return _computeHash(arr);
+
+                                default:
+                                    throw new ArgumentException("Unsupported Return Type", item.Key);
+                            }
+                        }
+
+                        var arr = memory.ToArray();
+                        lock (_computeHash)
+                            return _computeHash(arr);
+                    }
                 }
             };
         }
