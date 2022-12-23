@@ -17,7 +17,7 @@
 Declare class:
 
 ```c#
-class UserInfo
+class User
 {
     public string FirstName { get; set; }
     public string LastName { get; set; }
@@ -27,8 +27,8 @@ class UserInfo
 Configure Func:
 
 ```c#
-var fingerprint = FingerprintBuilder<UserInfo>
-    .Create(SHA256.Create().ComputeHash)
+var fingerprint = FingerprintBuilder<User>
+    .Create(SHA256.Create())
     .For(p => p.FirstName)
     .For(p => p.LastName)
     .Build();
@@ -37,14 +37,13 @@ var fingerprint = FingerprintBuilder<UserInfo>
 Get hash:
 
 ```c#
-var user = new UserInfo { FirstName = "John", LastName = "Smith" };
-var hash = fingerprint(user).ToLowerHexString(); // 9996c4bbc1da4938144886b27b7c680e75932b5a56d911754d75ae4e0a9b4f1a
+var user = new User { FirstName = "John", LastName = "Smith" };
+var hash = fingerprint(user).ToLowerHexString(); // 62565a67bf16004038c502eb68907411fcf7871c66ee01a1aa274cc18d9fb541
 ```
 
 ## Benchmarks
 
 ``` ini
-
 BenchmarkDotNet=v0.13.2, OS=arch
 Intel Core i7-8565U CPU 1.80GHz (Whiskey Lake), 1 CPU, 8 logical and 4 physical cores
 .NET SDK=7.0.101
