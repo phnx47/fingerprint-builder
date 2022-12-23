@@ -2,18 +2,19 @@ using System;
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
+using FingerprintBuilder.Tests.Models;
 using Xunit;
 
 namespace FingerprintBuilder.Tests
 {
-    public class ThreadSafeFingerprintBuilderTests
+    public class ThreadSafeTests
     {
         [Fact]
         public async Task UserInfo_Sha1_LoopThread()
         {
-            var fingerprint = FingerprintBuilder<UserInfo>
+            var fingerprint = FingerprintBuilder<BaseUser>
                 .Create(SHA1.Create())
-                .For(p => p.Name)
+                .For(p => p.FirstName)
                 .Build();
 
             var tasks = new List<Task>();
@@ -23,7 +24,7 @@ namespace FingerprintBuilder.Tests
                 {
                     for (int i = 0; i < 10000; i++)
                     {
-                        var hash = fingerprint(new UserInfo { Name = Guid.NewGuid().ToString() }).ToLowerHexString();
+                        var hash = fingerprint(new BaseUser { FirstName = Guid.NewGuid().ToString() }).ToLowerHexString();
                         Assert.NotEqual("0000000000000000000000000000000000000000", hash);
                     }
                 });
@@ -31,11 +32,6 @@ namespace FingerprintBuilder.Tests
             }
 
             await Task.WhenAll(tasks);
-        }
-
-        private class UserInfo
-        {
-            public string Name { get; set; }
         }
     }
 }

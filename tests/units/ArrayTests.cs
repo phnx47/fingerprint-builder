@@ -1,36 +1,33 @@
 using System;
 using System.Security.Cryptography;
+using FingerprintBuilder.Tests.Models;
 using Xunit;
 
 namespace FingerprintBuilder.Tests
 {
-    public class ArrayFingerprintBuilderTests
+    public class ArrayTests
     {
         [Fact]
-        public void UserInfo_EmailsAsArray_ThrowArgumentException()
+        public void EmailsAsArray_ThrowArgumentException()
         {
-            var exception = Assert.Throws<ArgumentException>(() => FingerprintBuilder<UserInfo>
+            var exception = Assert.Throws<ArgumentException>(() => FingerprintBuilder<ThisUser>
                 .Create(SHA1.Create())
-                .For(p => p.Name)
+                .For(p => p.FirstName)
                 .For(p => p.Emails)
                 .Build());
-            Assert.Equal(nameof(UserInfo.Emails), exception.ParamName);
+            Assert.Equal(nameof(ThisUser.Emails), exception.ParamName);
         }
 
         [Fact]
-        public void UserInfo_EmailsToString_Sha1()
+        public void Sha1_EmailsToString()
         {
-            var fingerprint = FingerprintBuilder<UserInfo>
+            var fingerprint = FingerprintBuilder<ThisUser>
                 .Create(SHA1.Create())
-                .For(p => p.Name)
+                .For(p => p.FirstName)
                 .For(p => p.Emails, emails => string.Join('|', emails))
                 .Build();
 
-            var user = new UserInfo
-            {
-                Name = "John",
-                Emails = new[] { "test@test.com" }
-            };
+            var user = new ThisUser { FirstName = "John", Emails = new[] { "test@test.com" } };
 
             var hash = fingerprint(user).ToLowerHexString();
 
@@ -38,19 +35,15 @@ namespace FingerprintBuilder.Tests
         }
 
         [Fact]
-        public void UserInfo_EmailsToString_Sha1_UpdateArray_ChangeHash()
+        public void Sha1_EmailsToString_UpdateArray_ChangeHash()
         {
-            var fingerprint = FingerprintBuilder<UserInfo>
+            var fingerprint = FingerprintBuilder<ThisUser>
                 .Create(SHA1.Create())
-                .For(p => p.Name)
+                .For(p => p.FirstName)
                 .For(p => p.Emails, emails => string.Join('|', emails))
                 .Build();
 
-            var user = new UserInfo
-            {
-                Name = "John",
-                Emails = new[] { "test@test.com" }
-            };
+            var user = new ThisUser { FirstName = "John", Emails = new[] { "test@test.com" } };
 
             var hash0 = fingerprint(user).ToLowerHexString();
             user.Emails[0] += "1";
@@ -59,10 +52,8 @@ namespace FingerprintBuilder.Tests
             Assert.NotEqual(hash0, hash1);
         }
 
-        private class UserInfo
+        private class ThisUser : BaseUser
         {
-            public string Name { get; set; }
-
             public string[] Emails { get; set; }
         }
     }

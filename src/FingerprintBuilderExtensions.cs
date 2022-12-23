@@ -7,14 +7,14 @@ namespace FingerprintBuilder
 {
     public static class FingerprintBuilderExtensions
     {
-        public static IFingerprintBuilder<T> For<T>(this IFingerprintBuilder<T> builder, Expression<Func<T, string>> expression, bool toLowerCase, bool ignoreWhiteSpace)
+        public static IFingerprintBuilder<T> For<T>(this IFingerprintBuilder<T> builder, Expression<Func<T, string>> expression, bool toLower, bool trim)
         {
             var format = (Func<string, string>)(input =>
             {
-                if (toLowerCase)
+                if (toLower)
                     input = input.ToLowerInvariant();
 
-                if (ignoreWhiteSpace)
+                if (trim)
                     input = input.Trim();
 
                 return input;
