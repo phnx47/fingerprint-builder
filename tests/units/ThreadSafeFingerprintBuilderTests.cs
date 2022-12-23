@@ -12,7 +12,7 @@ namespace FingerprintBuilder.Tests
         public async Task UserInfo_Sha1_LoopThread()
         {
             var fingerprint = FingerprintBuilder<UserInfo>
-                .Create(SHA1.Create().ComputeHash)
+                .Create(SHA1.Create())
                 .For(p => p.Name)
                 .Build();
 

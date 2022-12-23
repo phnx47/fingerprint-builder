@@ -3,25 +3,35 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Runtime.Serialization.Formatters.Binary;
+using System.Security.Cryptography;
 
 namespace FingerprintBuilder
 {
     public class FingerprintBuilder<T> : IFingerprintBuilder<T>
     {
         private readonly Func<byte[], byte[]> _computeHash;
-        private readonly IDictionary<string, Func<T, object>> _fingerprints;
+        private readonly IDictionary<string, Func<T, object>> _fingerprints = new SortedDictionary<string, Func<T, object>>(StringComparer.OrdinalIgnoreCase);
 
         private readonly Type[] _supportedTypes = { typeof(bool), typeof(byte), typeof(string), typeof(double) };
 
         private FingerprintBuilder(Func<byte[], byte[]> computeHash)
         {
             _computeHash = computeHash ?? throw new ArgumentNullException(nameof(computeHash));
-            _fingerprints = new SortedDictionary<string, Func<T, object>>(StringComparer.OrdinalIgnoreCase);
         }
 
+        private FingerprintBuilder(HashAlgorithm hashAlgorithm)
+        {
+            if (hashAlgorithm == null)
+                throw new ArgumentNullException(nameof(hashAlgorithm));
+            _computeHash = hashAlgorithm.ComputeHash;
+        }
+
+        [Obsolete("Use 'FingerprintBuilder<T>.Create(HashAlgorithm hashAlgorithm)'")]
         public static IFingerprintBuilder<T> Create(Func<byte[], byte[]> computeHash) =>
             new FingerprintBuilder<T>(computeHash);
+
+        public static IFingerprintBuilder<T> Create(HashAlgorithm hashAlgorithm) =>
+            new FingerprintBuilder<T>(hashAlgorithm);
 
         public IFingerprintBuilder<T> For<TProperty>(Expression<Func<T, TProperty>> expression) =>
             For<TProperty>(expression, _ => _);

@@ -9,7 +9,7 @@ namespace FingerprintBuilder.Tests
         public void UserInfo_Sha1()
         {
             var fingerprint = FingerprintBuilder<UserInfo>
-                .Create(SHA1.Create().ComputeHash)
+                .Create(SHA1.Create())
                 .For(p => p.FirstName)
                 .For(p => p.LastName)
                 .Build();
@@ -25,7 +25,7 @@ namespace FingerprintBuilder.Tests
         public void UserInfo_ToLowerCase_Sha1()
         {
             var fingerprint = FingerprintBuilder<UserInfo>
-                .Create(SHA1.Create().ComputeHash)
+                .Create(SHA1.Create())
                 .For(p => p.FirstName, true, true)
                 .For(p => p.LastName, true, true)
                 .Build();
@@ -49,7 +49,7 @@ namespace FingerprintBuilder.Tests
         public void UserInfo_Sha256()
         {
             var fingerprint = FingerprintBuilder<UserInfo>
-                .Create(SHA256.Create().ComputeHash)
+                .Create(SHA256.Create())
                 .For(p => p.FirstName)
                 .For(p => p.LastName)
                 .Build();
@@ -67,7 +67,7 @@ namespace FingerprintBuilder.Tests
         public void UserInfo_ToLowerCase_Sha256()
         {
             var fingerprint = FingerprintBuilder<UserInfo>
-                .Create(SHA256.Create().ComputeHash)
+                .Create(SHA256.Create())
                 .For(p => p.FirstName, true, true)
                 .For(p => p.LastName, true, true)
                 .Build();
@@ -91,7 +91,7 @@ namespace FingerprintBuilder.Tests
         public void UserInfo_Sha1_Null()
         {
             var fingerprint = FingerprintBuilder<UserInfo>
-                .Create(SHA1.Create().ComputeHash)
+                .Create(SHA1.Create())
                 .For(p => p.FirstName)
                 .For(p => p.LastName)
                 .Build();
@@ -107,13 +107,13 @@ namespace FingerprintBuilder.Tests
         public void UserInfo_Sha1_Equals_AnotherUserInfo_Sha1()
         {
             var fingerprint = FingerprintBuilder<UserInfo>
-                .Create(SHA1.Create().ComputeHash)
+                .Create(SHA1.Create())
                 .For(p => p.FirstName)
                 .For(p => p.LastName)
                 .Build();
 
             var fingerprintAnother = FingerprintBuilder<AnotherUserInfo>
-                .Create(SHA1.Create().ComputeHash)
+                .Create(SHA1.Create())
                 .For(p => p.FirstName1)
                 .For(p => p.LastName1)
                 .Build();

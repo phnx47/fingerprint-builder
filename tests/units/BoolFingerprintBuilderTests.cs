@@ -9,7 +9,7 @@ namespace FingerprintBuilder.Tests
         public void UserInfo_Sha1()
         {
             var fingerprint = FingerprintBuilder<UserInfo>
-                .Create(SHA1.Create().ComputeHash)
+                .Create(SHA1.Create())
                 .For(p => p.Name)
                 .For(p => p.IsActive)
                 .Build();
@@ -25,7 +25,7 @@ namespace FingerprintBuilder.Tests
         public void UserInfo_Sha1_UpdateBool_ChangeHash()
         {
             var fingerprint = FingerprintBuilder<UserInfo>
-                .Create(SHA1.Create().ComputeHash)
+                .Create(SHA1.Create())
                 .For(p => p.Name)
                 .For(p => p.IsActive)
                 .Build();

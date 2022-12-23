@@ -27,25 +27,25 @@ namespace FingerprintBuilder.BenchmarkTests
             };
 
             _md5 = FingerprintBuilder<UserInfo>
-                .Create(MD5.Create().ComputeHash)
+                .Create(MD5.Create())
                 .For(p => p.FirstName)
                 .For(p => p.LastName)
                 .Build();
 
             _sha1 = FingerprintBuilder<UserInfo>
-                .Create(SHA1.Create().ComputeHash)
+                .Create(SHA1.Create())
                 .For(p => p.FirstName)
                 .For(p => p.LastName)
                 .Build();
 
             _sha256 = FingerprintBuilder<UserInfo>
-                .Create(SHA256.Create().ComputeHash)
+                .Create(SHA256.Create())
                 .For(p => p.FirstName)
                 .For(p => p.LastName)
                 .Build();
 
             _sha512 = FingerprintBuilder<UserInfo>
-                .Create(SHA512.Create().ComputeHash)
+                .Create(SHA512.Create())
                 .For(p => p.FirstName)
                 .For(p => p.LastName)
                 .Build();

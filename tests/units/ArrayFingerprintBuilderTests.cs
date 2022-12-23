@@ -10,7 +10,7 @@ namespace FingerprintBuilder.Tests
         public void UserInfo_EmailsAsArray_ThrowArgumentException()
         {
             var exception = Assert.Throws<ArgumentException>(() => FingerprintBuilder<UserInfo>
-                .Create(SHA1.Create().ComputeHash)
+                .Create(SHA1.Create())
                 .For(p => p.Name)
                 .For(p => p.Emails)
                 .Build());
@@ -21,7 +21,7 @@ namespace FingerprintBuilder.Tests
         public void UserInfo_EmailsToString_Sha1()
         {
             var fingerprint = FingerprintBuilder<UserInfo>
-                .Create(SHA1.Create().ComputeHash)
+                .Create(SHA1.Create())
                 .For(p => p.Name)
                 .For(p => p.Emails, emails => string.Join('|', emails))
                 .Build();
@@ -41,7 +41,7 @@ namespace FingerprintBuilder.Tests
         public void UserInfo_EmailsToString_Sha1_UpdateArray_ChangeHash()
         {
             var fingerprint = FingerprintBuilder<UserInfo>
-                .Create(SHA1.Create().ComputeHash)
+                .Create(SHA1.Create())
                 .For(p => p.Name)
                 .For(p => p.Emails, emails => string.Join('|', emails))
                 .Build();
