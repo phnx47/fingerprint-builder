@@ -2,12 +2,10 @@ using System;
 using System.Security.Cryptography;
 using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Engines;
-using BenchmarkDotNet.Jobs;
 
 namespace FingerprintBuilder.BenchmarkTests
 {
     [MeanColumn, MinColumn, MaxColumn, MedianColumn]
-    [SimpleJob(RunStrategy.Throughput, RuntimeMoniker.Net70)]
     public class ModelToHex
     {
         private Func<UserInfo, byte[]> _md5;
