@@ -1,3 +1,4 @@
+using System;
 using System.Security.Cryptography;
 using FingerprintBuilder.Tests.Models;
 using Xunit;
@@ -6,18 +7,23 @@ namespace FingerprintBuilder.Tests
 {
     public class StringTests
     {
-        [Fact]
-        public void Sha1()
+        private readonly Func<BaseUser, byte[]> _sha1;
+        private readonly BaseUser _user;
+
+        public StringTests()
         {
-            var fingerprint = FingerprintBuilder<BaseUser>
+            _sha1 = FingerprintBuilder<BaseUser>
                 .Create(SHA1.Create())
                 .For(p => p.FirstName)
                 .For(p => p.LastName)
                 .Build();
+            _user = new BaseUser { FirstName = "John", LastName = "Smith" };
+        }
 
-            var user = new BaseUser { FirstName = "John", LastName = "Smith" };
-
-            var hash = fingerprint(user).ToLowerHexString();
+        [Fact]
+        public void Sha1()
+        {
+            var hash = _sha1(_user).ToLowerHexString();
 
             Assert.Equal("ac1992c8791c6ae5c8a2e8ed22feb109d86dc091", hash);
         }
@@ -25,16 +31,14 @@ namespace FingerprintBuilder.Tests
         [Fact]
         public void Sha256()
         {
-            var fingerprint = FingerprintBuilder<BaseUser>
+            var sha256 = FingerprintBuilder<BaseUser>
                 .Create(SHA256.Create())
                 .For(p => p.FirstName)
                 .For(p => p.LastName)
                 .Build();
 
-            var user = new BaseUser { FirstName = "John", LastName = "Smith" };
-
-            var hashLower = fingerprint(user).ToLowerHexString();
-            var hashUpper = fingerprint(user).ToUpperHexString();
+            var hashLower = sha256(_user).ToLowerHexString();
+            var hashUpper = sha256(_user).ToUpperHexString();
 
             const string expected = "62565a67bf16004038c502eb68907411fcf7871c66ee01a1aa274cc18d9fb541";
 
@@ -46,15 +50,9 @@ namespace FingerprintBuilder.Tests
         [Fact]
         public void Sha1_Null()
         {
-            var fingerprint = FingerprintBuilder<BaseUser>
-                .Create(SHA1.Create())
-                .For(p => p.FirstName)
-                .For(p => p.LastName)
-                .Build();
+            _user.LastName = null;
 
-            var user = new BaseUser { FirstName = "John", LastName = null };
-
-            var hash = fingerprint(user).ToLowerHexString();
+            var hash = _sha1(_user).ToLowerHexString();
 
             Assert.Equal("2e2a2813f314668223c79f0bc819b39ce71810ca", hash);
         }
@@ -62,45 +60,36 @@ namespace FingerprintBuilder.Tests
         [Fact]
         public void Sha1_Equals_AnotherBaseUser_Sha1()
         {
-            var fingerprint = FingerprintBuilder<BaseUser>
-                .Create(SHA1.Create())
-                .For(p => p.FirstName)
-                .For(p => p.LastName)
-                .Build();
-
-            var fingerprintAnother = FingerprintBuilder<ChangedPropUser>
+            var sha1ChangedProp = FingerprintBuilder<ChangedPropUser>
                 .Create(SHA1.Create())
                 .For(p => p.FirstName1)
                 .For(p => p.LastName1)
                 .Build();
 
-            var hash = fingerprint(new BaseUser { FirstName = "John", LastName = "Smith" }).ToLowerHexString();
+            var hash = _sha1(_user).ToLowerHexString();
 
-            var hashRevert = fingerprintAnother(new ChangedPropUser { LastName1 = "Smith", FirstName1 = "John" }).ToLowerHexString();
+            var hashChangedProp = sha1ChangedProp(new ChangedPropUser { LastName1 = "Smith", FirstName1 = "John" }).ToLowerHexString();
 
-            Assert.Equal(hash, hashRevert);
+            Assert.Equal(hash, hashChangedProp);
         }
 
         [Fact]
-        public void Sha1_Compare_Obsolete_Create()
+        public void Sha1_Compare_Create()
         {
-            var fingerprint0 = FingerprintBuilder<BaseUser>
+            var sha1A = FingerprintBuilder<BaseUser>
                 .Create(SHA1.Create())
                 .For(p => p.FirstName)
                 .For(p => p.LastName)
                 .Build();
 
-            var fingerprint1 = FingerprintBuilder<BaseUser>
+            var sha1B = FingerprintBuilder<BaseUser>
                 .Create(SHA1.Create().ComputeHash)
                 .For(p => p.FirstName)
                 .For(p => p.LastName)
                 .Build();
 
-            var user = new BaseUser { FirstName = "John", LastName = "Smith" };
-
-            Assert.Equal(fingerprint0(user).ToLowerHexString(), fingerprint1(user).ToLowerHexString());
+            Assert.Equal(sha1A(_user).ToLowerHexString(), sha1B(_user).ToLowerHexString());
         }
-
 
         private class ChangedPropUser
         {
