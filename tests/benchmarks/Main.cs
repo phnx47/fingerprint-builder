@@ -1,12 +1,11 @@
 using BenchmarkDotNet.Running;
 
-namespace FingerprintBuilder.BenchmarkTests
+namespace FingerprintBuilder.BenchmarkTests;
+
+public class Program
 {
-    public class Program
+    private static void Main(string[] args)
     {
-        private static void Main(string[] args)
-        {
-            BenchmarkRunner.Run<ModelToHex>();
-        }
+        BenchmarkRunner.Run<ModelToHex>();
     }
 }
