@@ -7,12 +7,12 @@ namespace FingerprintBuilder.Tests
 {
     public class BoolTests
     {
-        private readonly Func<ThisUser, byte[]> _fingerprint;
+        private readonly Func<ThisUser, byte[]> _sha1;
         private readonly ThisUser _user;
 
         public BoolTests()
         {
-            _fingerprint = FingerprintBuilder<ThisUser>
+            _sha1 = FingerprintBuilder<ThisUser>
                 .Create(SHA1.Create())
                 .For(p => p.FirstName)
                 .For(p => p.IsActive)
@@ -24,7 +24,7 @@ namespace FingerprintBuilder.Tests
         [Fact]
         public void Sha1()
         {
-            var hash = _fingerprint(_user).ToLowerHexString();
+            var hash = _sha1(_user).ToLowerHexString();
 
             Assert.Equal("fe563bb6a90707c3e2f9c2960a4c96de7d894762", hash);
         }
@@ -32,9 +32,9 @@ namespace FingerprintBuilder.Tests
         [Fact]
         public void UserInfo_Sha1_UpdateBool_ChangeHash()
         {
-            var hash0 = _fingerprint(_user).ToLowerHexString();
+            var hash0 = _sha1(_user).ToLowerHexString();
             _user.IsActive = false;
-            var hash1 = _fingerprint(_user).ToLowerHexString();
+            var hash1 = _sha1(_user).ToLowerHexString();
 
             Assert.NotEqual(hash0, hash1);
         }

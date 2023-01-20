@@ -7,12 +7,12 @@ namespace FingerprintBuilder.Tests
 {
     public class ByteTests
     {
-        private readonly Func<ThisUser, byte[]> _fingerprint;
+        private readonly Func<ThisUser, byte[]> _sha1;
         private readonly ThisUser _user;
 
         public ByteTests()
         {
-            _fingerprint = FingerprintBuilder<ThisUser>
+            _sha1 = FingerprintBuilder<ThisUser>
                 .Create(SHA1.Create())
                 .For(p => p.FirstName)
                 .For(p => p.B)
@@ -25,16 +25,16 @@ namespace FingerprintBuilder.Tests
         [Fact]
         public void Sha1()
         {
-            var hash = _fingerprint(_user).ToLowerHexString();
+            var hash = _sha1(_user).ToLowerHexString();
             Assert.Equal("a776d5f93c2913146b400978961e2d2658b27932", hash);
         }
 
         [Fact]
         public void UserInfo_Sha1_UpdateByte_ChangeHash()
         {
-            var hash0 = _fingerprint(_user).ToLowerHexString();
+            var hash0 = _sha1(_user).ToLowerHexString();
             _user.B = 3;
-            var hash1 = _fingerprint(_user).ToLowerHexString();
+            var hash1 = _sha1(_user).ToLowerHexString();
 
             Assert.NotEqual(hash0, hash1);
         }
@@ -42,9 +42,9 @@ namespace FingerprintBuilder.Tests
         [Fact]
         public void UserInfo_Sha1_UpdateSByte_ChangeHash()
         {
-            var hash0 = _fingerprint(_user).ToLowerHexString();
+            var hash0 = _sha1(_user).ToLowerHexString();
             _user.SB = -1;
-            var hash1 = _fingerprint(_user).ToLowerHexString();
+            var hash1 = _sha1(_user).ToLowerHexString();
 
             Assert.NotEqual(hash0, hash1);
         }
