@@ -19,22 +19,11 @@ namespace FingerprintBuilder
             _computeHash = computeHash ?? throw new ArgumentNullException(nameof(computeHash));
         }
 
-        private FingerprintBuilder(HashAlgorithm hashAlgorithm)
-        {
-            if (hashAlgorithm == null)
-                throw new ArgumentNullException(nameof(hashAlgorithm));
-            _computeHash = hashAlgorithm.ComputeHash;
-        }
+        public static IFingerprintBuilder<T> Create(HashAlgorithm hashAlgorithm) => Create(hashAlgorithm.ComputeHash);
 
-        [Obsolete("Use 'FingerprintBuilder<T>.Create(HashAlgorithm hashAlgorithm)'")]
-        public static IFingerprintBuilder<T> Create(Func<byte[], byte[]> computeHash) =>
-            new FingerprintBuilder<T>(computeHash);
+        public static IFingerprintBuilder<T> Create(Func<byte[], byte[]> computeHash) => new FingerprintBuilder<T>(computeHash);
 
-        public static IFingerprintBuilder<T> Create(HashAlgorithm hashAlgorithm) =>
-            new FingerprintBuilder<T>(hashAlgorithm);
-
-        public IFingerprintBuilder<T> For<TProperty>(Expression<Func<T, TProperty>> expression) =>
-            For<TProperty>(expression, _ => _);
+        public IFingerprintBuilder<T> For<TProperty>(Expression<Func<T, TProperty>> expression) => For<TProperty>(expression, _ => _);
 
         public IFingerprintBuilder<T> For<TProperty>(Expression<Func<T, TProperty>> expression, Expression<Func<TProperty, string>> fingerprint) =>
             For<TProperty, string>(expression, fingerprint);
