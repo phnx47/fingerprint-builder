@@ -12,7 +12,7 @@ namespace FingerprintBuilder
         private readonly Func<byte[], byte[]> _computeHash;
         private readonly IDictionary<string, Func<T, object>> _fingerprints = new SortedDictionary<string, Func<T, object>>(StringComparer.OrdinalIgnoreCase);
 
-        private readonly Type[] _supportedTypes = { typeof(bool), typeof(byte), typeof(string), typeof(double) };
+        private readonly Type[] _supportedTypes = { typeof(bool), typeof(byte), typeof(sbyte), typeof(string), typeof(double) };
 
         private FingerprintBuilder(Func<byte[], byte[]> computeHash)
         {
@@ -72,20 +72,21 @@ namespace FingerprintBuilder
                             {
                                 case null:
                                     continue;
-                                case bool b:
-                                    binaryWriter.Write(b);
+                                case bool bl:
+                                    binaryWriter.Write(bl);
                                     break;
-                                case byte b:
-                                    binaryWriter.Write(b);
+                                case byte bt:
+                                    binaryWriter.Write(bt);
                                     break;
-                                case string s:
-                                    binaryWriter.Write(s);
+                                case sbyte sbt:
+                                    binaryWriter.Write(sbt);
                                     break;
-                                case double d:
-                                    binaryWriter.Write(d);
+                                case string str:
+                                    binaryWriter.Write(str);
                                     break;
-
-
+                                case double dbl:
+                                    binaryWriter.Write(dbl);
+                                    break;
                                 default:
                                     throw new ArgumentException("Unsupported Return Type", item.Key);
                             }

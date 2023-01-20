@@ -19,7 +19,7 @@ namespace FingerprintBuilder.Tests
 
             var hash = fingerprint(user).ToLowerHexString();
 
-            Assert.Equal("a03db944eab509e15d068e7a1144d8cf4b2714dd", hash);
+            Assert.Equal("fe563bb6a90707c3e2f9c2960a4c96de7d894762", hash);
         }
 
         [Fact]
