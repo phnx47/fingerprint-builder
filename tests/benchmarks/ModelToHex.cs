@@ -1,7 +1,6 @@
 using System;
 using System.Security.Cryptography;
 using BenchmarkDotNet.Attributes;
-using BenchmarkDotNet.Engines;
 
 namespace FingerprintBuilder.BenchmarkTests;
 

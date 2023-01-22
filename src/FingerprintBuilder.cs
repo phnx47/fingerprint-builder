@@ -12,7 +12,7 @@ public class FingerprintBuilder<T> : IFingerprintBuilder<T>
     private readonly Func<byte[], byte[]> _computeHash;
     private readonly IDictionary<string, Func<T, object>> _fingerprints = new SortedDictionary<string, Func<T, object>>(StringComparer.OrdinalIgnoreCase);
 
-    private readonly Type[] _supportedTypes = { typeof(bool), typeof(byte), typeof(sbyte), typeof(string), typeof(double) };
+    private readonly Type[] _supportedTypes = { typeof(bool), typeof(byte), typeof(sbyte), typeof(byte[]), typeof(string), typeof(double) };
 
     private FingerprintBuilder(Func<byte[], byte[]> computeHash)
     {
@@ -80,6 +80,9 @@ public class FingerprintBuilder<T> : IFingerprintBuilder<T>
                                 break;
                             case sbyte sbt:
                                 binaryWriter.Write(sbt);
+                                break;
+                            case byte[] sbta:
+                                binaryWriter.Write(sbta);
                                 break;
                             case string str:
                                 binaryWriter.Write(str);
