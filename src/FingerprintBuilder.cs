@@ -23,19 +23,14 @@ public class FingerprintBuilder<T> : IFingerprintBuilder<T>
 
     public static IFingerprintBuilder<T> Create(Func<byte[], byte[]> computeHash) => new FingerprintBuilder<T>(computeHash);
 
-    public IFingerprintBuilder<T> For<TProperty>(Expression<Func<T, TProperty>> expression) => For<TProperty>(expression, _ => _);
+    public IFingerprintBuilder<T> For<TProperty>(Expression<Func<T, TProperty>> expression) => For(expression, f => f);
 
     public IFingerprintBuilder<T> For<TProperty>(Expression<Func<T, TProperty>> expression, Expression<Func<TProperty, string>> fingerprint) =>
         For<TProperty, string>(expression, fingerprint);
 
-    public IFingerprintBuilder<T> For<TProperty>(Expression<Func<T, TProperty>> expression, Expression<Func<TProperty, TProperty>> fingerprint)
-    {
-        return For<TProperty, TProperty>(expression, fingerprint);
-    }
-
     private IFingerprintBuilder<T> For<TProperty, TReturnType>(Expression<Func<T, TProperty>> expression, Expression<Func<TProperty, TReturnType>> fingerprint)
     {
-        if (!(expression.Body is MemberExpression memberExpression))
+        if (expression.Body is not MemberExpression memberExpression)
             throw new ArgumentException("Expression must be a member expression");
 
         if (_fingerprints.ContainsKey(memberExpression.Member.Name))
@@ -61,45 +56,41 @@ public class FingerprintBuilder<T> : IFingerprintBuilder<T>
     {
         return obj =>
         {
-            using (var memory = new MemoryStream())
+            using var memory = new MemoryStream();
+            using var binaryWriter = new BinaryWriter(memory);
+            foreach (var item in _fingerprints)
             {
-                using (var binaryWriter = new BinaryWriter(memory))
+                var graph = item.Value(obj);
+                switch (graph)
                 {
-                    foreach (var item in _fingerprints)
-                    {
-                        var graph = item.Value(obj);
-                        switch (graph)
-                        {
-                            case null:
-                                continue;
-                            case bool bl:
-                                binaryWriter.Write(bl);
-                                break;
-                            case byte bt:
-                                binaryWriter.Write(bt);
-                                break;
-                            case sbyte sbt:
-                                binaryWriter.Write(sbt);
-                                break;
-                            case byte[] sbta:
-                                binaryWriter.Write(sbta);
-                                break;
-                            case string str:
-                                binaryWriter.Write(str);
-                                break;
-                            case double dbl:
-                                binaryWriter.Write(dbl);
-                                break;
-                            default:
-                                throw new ArgumentException("Unsupported Return Type", item.Key);
-                        }
-                    }
-
-                    var arr = memory.ToArray();
-                    lock (_computeHash)
-                        return _computeHash(arr);
+                    case null:
+                        continue;
+                    case bool bl:
+                        binaryWriter.Write(bl);
+                        break;
+                    case byte bt:
+                        binaryWriter.Write(bt);
+                        break;
+                    case sbyte sbt:
+                        binaryWriter.Write(sbt);
+                        break;
+                    case byte[] sbta:
+                        binaryWriter.Write(sbta);
+                        break;
+                    case string str:
+                        binaryWriter.Write(str);
+                        break;
+                    case double dbl:
+                        binaryWriter.Write(dbl);
+                        break;
+                    default:
+                        throw new ArgumentException("Unsupported Return Type", item.Key);
                 }
             }
+
+            var arr = memory.ToArray();
+            lock (_computeHash)
+                return _computeHash(arr);
         };
     }
 }

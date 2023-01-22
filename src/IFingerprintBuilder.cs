@@ -9,7 +9,5 @@ public interface IFingerprintBuilder<T>
 
     IFingerprintBuilder<T> For<TProperty>(Expression<Func<T, TProperty>> expression, Expression<Func<TProperty, string>> fingerprint);
 
-    IFingerprintBuilder<T> For<TProperty>(Expression<Func<T, TProperty>> expression, Expression<Func<TProperty, TProperty>> fingerprint);
-
     Func<T, byte[]> Build();
 }
