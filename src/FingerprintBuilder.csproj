@@ -18,7 +18,8 @@
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <PackageIcon>icon.png</PackageIcon>
     <PackageReadmeFile>README.md</PackageReadmeFile>
-    <NoWarn>1591</NoWarn>
+    <PackageOutputPath>nupkgs</PackageOutputPath>
+    <NoWarn>CS1591</NoWarn>
   </PropertyGroup>
   <ItemGroup>
     <None Include="../icon.png" Pack="true" Visible="false" PackagePath="" />
