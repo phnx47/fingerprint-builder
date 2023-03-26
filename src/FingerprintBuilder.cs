@@ -12,7 +12,17 @@ public class FingerprintBuilder<T> : IFingerprintBuilder<T>
     private readonly Func<byte[], byte[]> _computeHash;
     private readonly IDictionary<string, Func<T, object>> _fingerprints = new SortedDictionary<string, Func<T, object>>(StringComparer.OrdinalIgnoreCase);
 
-    private readonly Type[] _supportedTypes = { typeof(bool), typeof(byte), typeof(sbyte), typeof(byte[]), typeof(string), typeof(double) };
+    private readonly Type[] _supportedTypes =
+    {
+        typeof(bool),
+        typeof(byte),
+        typeof(sbyte),
+        typeof(byte[]),
+        typeof(char),
+        typeof(char[]),
+        typeof(string),
+        typeof(double)
+    };
 
     private FingerprintBuilder(Func<byte[], byte[]> computeHash)
     {
@@ -43,9 +53,9 @@ public class FingerprintBuilder<T> : IFingerprintBuilder<T>
         var getValue = expression.Compile();
         var getFingerprint = fingerprint.Compile();
 
-        _fingerprints[memberExpression.Member.Name] = obj =>
+        _fingerprints[memberExpression.Member.Name] = entity =>
         {
-            var value = getValue(obj);
+            var value = getValue(entity);
             return value == null ? default : getFingerprint(value);
         };
 
@@ -54,34 +64,40 @@ public class FingerprintBuilder<T> : IFingerprintBuilder<T>
 
     public Func<T, byte[]> Build()
     {
-        return obj =>
+        return entity =>
         {
             using var memory = new MemoryStream();
             using var binaryWriter = new BinaryWriter(memory);
             foreach (var item in _fingerprints)
             {
-                var graph = item.Value(obj);
-                switch (graph)
+                var value = item.Value(entity);
+                switch (value)
                 {
                     case null:
-                        continue;
-                    case bool bl:
-                        binaryWriter.Write(bl);
                         break;
-                    case byte bt:
-                        binaryWriter.Write(bt);
+                    case bool typedValue:
+                        binaryWriter.Write(typedValue);
                         break;
-                    case sbyte sbt:
-                        binaryWriter.Write(sbt);
+                    case byte typedValue:
+                        binaryWriter.Write(typedValue);
                         break;
-                    case byte[] sbta:
-                        binaryWriter.Write(sbta);
+                    case sbyte typedValue:
+                        binaryWriter.Write(typedValue);
                         break;
-                    case string str:
-                        binaryWriter.Write(str);
+                    case byte[] typedValue:
+                        binaryWriter.Write(typedValue);
                         break;
-                    case double dbl:
-                        binaryWriter.Write(dbl);
+                    case char typedValue:
+                        binaryWriter.Write(typedValue);
+                        break;
+                    case char[] typedValue:
+                        binaryWriter.Write(typedValue);
+                        break;
+                    case string typedValue:
+                        binaryWriter.Write(typedValue);
+                        break;
+                    case double typedValue:
+                        binaryWriter.Write(typedValue);
                         break;
                     default:
                         throw new ArgumentException("Unsupported Return Type", item.Key);
