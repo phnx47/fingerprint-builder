@@ -20,8 +20,9 @@ public class FingerprintBuilder<T> : IFingerprintBuilder<T>
         typeof(byte[]),
         typeof(char),
         typeof(char[]),
-        typeof(string),
-        typeof(double)
+        typeof(double),
+        typeof(decimal),
+        typeof(string)
     };
 
     private FingerprintBuilder(Func<byte[], byte[]> computeHash)
@@ -93,10 +94,13 @@ public class FingerprintBuilder<T> : IFingerprintBuilder<T>
                     case char[] typedValue:
                         binaryWriter.Write(typedValue);
                         break;
-                    case string typedValue:
+                    case double typedValue:
                         binaryWriter.Write(typedValue);
                         break;
-                    case double typedValue:
+                    case decimal typedValue:
+                        binaryWriter.Write(typedValue);
+                        break;
+                    case string typedValue:
                         binaryWriter.Write(typedValue);
                         break;
                     default:
