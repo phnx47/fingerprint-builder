@@ -22,6 +22,8 @@ public class FingerprintBuilder<T> : IFingerprintBuilder<T>
         typeof(char[]),
         typeof(double),
         typeof(decimal),
+        typeof(short),
+        typeof(ushort),
         typeof(string)
     };
 
@@ -100,6 +102,12 @@ public class FingerprintBuilder<T> : IFingerprintBuilder<T>
                     case decimal typedValue:
                         binaryWriter.Write(typedValue);
                         break;
+                    case short typedValue:
+                        binaryWriter.Write(typedValue);
+                        break;
+                    case ushort typedValue:
+                        binaryWriter.Write(typedValue);
+                        break;
                     case string typedValue:
                         binaryWriter.Write(typedValue);
                         break;
@@ -108,9 +116,9 @@ public class FingerprintBuilder<T> : IFingerprintBuilder<T>
                 }
             }
 
-            var arr = memory.ToArray();
+            var bytes = memory.ToArray();
             lock (_computeHash)
-                return _computeHash(arr);
+                return _computeHash(bytes);
         };
     }
 }
