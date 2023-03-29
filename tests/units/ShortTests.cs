@@ -15,15 +15,15 @@ public class ShortTests
         _sha1 = FingerprintBuilder<ThisUser>
             .Create(SHA1.Create())
             .For(p => p.FirstName)
-            .For(p => p.S)
-            .For(p => p.US)
+            .For(p => p.ShortNumber)
+            .For(p => p.UShortNumber)
             .Build();
 
         _user = new ThisUser
         {
             FirstName = "John",
-            S = -2,
-            US = 2,
+            ShortNumber = -2,
+            UShortNumber = 2,
         };
     }
 
@@ -38,7 +38,7 @@ public class ShortTests
     public void UserInfo_Sha1_UpdateShort_ChangeHash()
     {
         var hash0 = _sha1(_user).ToLowerHexString();
-        _user.S = 2;
+        _user.ShortNumber = 2;
         var hash1 = _sha1(_user).ToLowerHexString();
 
         Assert.NotEqual(hash0, hash1);
@@ -48,7 +48,7 @@ public class ShortTests
     public void UserInfo_Sha1_UpdateUShort_ChangeHash()
     {
         var hash0 = _sha1(_user).ToLowerHexString();
-        _user.US = 1;
+        _user.UShortNumber = 1;
         var hash1 = _sha1(_user).ToLowerHexString();
 
         Assert.NotEqual(hash0, hash1);
@@ -56,7 +56,7 @@ public class ShortTests
 
     private class ThisUser : BaseUser
     {
-        public short S { get; set; }
-        public ushort US { get; set; }
+        public short ShortNumber { get; set; }
+        public ushort UShortNumber { get; set; }
     }
 }

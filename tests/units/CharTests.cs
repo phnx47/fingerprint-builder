@@ -15,15 +15,15 @@ public class CharTests
         _sha1 = FingerprintBuilder<ThisUser>
             .Create(SHA1.Create())
             .For(p => p.FirstName)
-            .For(p => p.C)
-            .For(p => p.CA)
+            .For(p => p.Char)
+            .For(p => p.ArrChars)
             .Build();
 
         _user = new ThisUser
         {
             FirstName = "John",
-            C = 'a',
-            CA = new[] { 'a', 'b' }
+            Char = 'a',
+            ArrChars = new[] { 'a', 'b' }
         };
     }
 
@@ -31,14 +31,14 @@ public class CharTests
     public void Sha1()
     {
         var hash = _sha1(_user).ToLowerHexString();
-        Assert.Equal("a35e3c62ef3fc755ddadf9df86c3008e8874cac1", hash);
+        Assert.Equal("c2969eeda3f16f68058e987e0f0822708837b7a4", hash);
     }
 
     [Fact]
     public void UserInfo_Sha1_UpdateChar_ChangeHash()
     {
         var hash0 = _sha1(_user).ToLowerHexString();
-        _user.C = 'c';
+        _user.Char = 'c';
         var hash1 = _sha1(_user).ToLowerHexString();
 
         Assert.NotEqual(hash0, hash1);
@@ -49,7 +49,7 @@ public class CharTests
     public void UserInfo_Sha1_UpdateCharArray_ChangeHash()
     {
         var hash0 = _sha1(_user).ToLowerHexString();
-        _user.CA[1] = 'c';
+        _user.ArrChars[1] = 'c';
         var hash1 = _sha1(_user).ToLowerHexString();
 
         Assert.NotEqual(hash0, hash1);
@@ -57,8 +57,8 @@ public class CharTests
 
     private class ThisUser : BaseUser
     {
-        public char C { get; set; }
+        public char Char { get; set; }
 
-        public char[] CA { get; set; }
+        public char[] ArrChars { get; set; }
     }
 }
