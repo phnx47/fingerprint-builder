@@ -28,6 +28,7 @@ public class FingerprintBuilder<T> : IFingerprintBuilder<T>
         typeof(uint),
         typeof(long),
         typeof(ulong),
+        typeof(float),
         typeof(string)
     };
 
@@ -122,6 +123,9 @@ public class FingerprintBuilder<T> : IFingerprintBuilder<T>
                         binaryWriter.Write(typedValue);
                         break;
                     case ulong typedValue:
+                        binaryWriter.Write(typedValue);
+                        break;
+                    case float typedValue:
                         binaryWriter.Write(typedValue);
                         break;
                     case string typedValue:
