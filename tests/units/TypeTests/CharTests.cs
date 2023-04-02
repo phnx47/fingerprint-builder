@@ -3,27 +3,27 @@ using System.Security.Cryptography;
 using FingerprintBuilder.Tests.Models;
 using Xunit;
 
-namespace FingerprintBuilder.Tests;
+namespace FingerprintBuilder.Tests.TypeTests;
 
-public class IntTests
+public class CharTests
 {
     private readonly Func<ThisUser, byte[]> _sha1;
     private readonly ThisUser _user;
 
-    public IntTests()
+    public CharTests()
     {
         _sha1 = FingerprintBuilder<ThisUser>
             .Create(SHA1.Create())
             .For(p => p.FirstName)
-            .For(p => p.IntNumber)
-            .For(p => p.UIntNumber)
+            .For(p => p.Char)
+            .For(p => p.ArrChars)
             .Build();
 
         _user = new ThisUser
         {
             FirstName = "John",
-            IntNumber = -2,
-            UIntNumber = 2,
+            Char = 'a',
+            ArrChars = new[] { 'a', 'b' }
         };
     }
 
@@ -31,24 +31,25 @@ public class IntTests
     public void Sha1()
     {
         var hash = _sha1(_user).ToLowerHexString();
-        Assert.Equal("8670e727f763004645ffb82b49e405b486732b7b", hash);
+        Assert.Equal("c2969eeda3f16f68058e987e0f0822708837b7a4", hash);
     }
 
     [Fact]
-    public void UserInfo_Sha1_UpdateShort_ChangeHash()
+    public void UserInfo_Sha1_UpdateChar_ChangeHash()
     {
         var hash0 = _sha1(_user).ToLowerHexString();
-        _user.IntNumber = 2;
+        _user.Char = 'c';
         var hash1 = _sha1(_user).ToLowerHexString();
 
         Assert.NotEqual(hash0, hash1);
     }
 
+
     [Fact]
-    public void UserInfo_Sha1_UpdateUShort_ChangeHash()
+    public void UserInfo_Sha1_UpdateCharArray_ChangeHash()
     {
         var hash0 = _sha1(_user).ToLowerHexString();
-        _user.UIntNumber = 1;
+        _user.ArrChars[1] = 'c';
         var hash1 = _sha1(_user).ToLowerHexString();
 
         Assert.NotEqual(hash0, hash1);
@@ -56,7 +57,8 @@ public class IntTests
 
     private class ThisUser : User
     {
-        public int IntNumber { get; set; }
-        public uint UIntNumber { get; set; }
+        public char Char { get; set; }
+
+        public char[] ArrChars { get; set; }
     }
 }

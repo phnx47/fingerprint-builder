@@ -3,27 +3,27 @@ using System.Security.Cryptography;
 using FingerprintBuilder.Tests.Models;
 using Xunit;
 
-namespace FingerprintBuilder.Tests;
+namespace FingerprintBuilder.Tests.TypeTests;
 
-public class ShortTests
+public class IntTests
 {
     private readonly Func<ThisUser, byte[]> _sha1;
     private readonly ThisUser _user;
 
-    public ShortTests()
+    public IntTests()
     {
         _sha1 = FingerprintBuilder<ThisUser>
             .Create(SHA1.Create())
             .For(p => p.FirstName)
-            .For(p => p.ShortNumber)
-            .For(p => p.UShortNumber)
+            .For(p => p.IntNumber)
+            .For(p => p.UIntNumber)
             .Build();
 
         _user = new ThisUser
         {
             FirstName = "John",
-            ShortNumber = -2,
-            UShortNumber = 2,
+            IntNumber = -2,
+            UIntNumber = 2,
         };
     }
 
@@ -31,14 +31,14 @@ public class ShortTests
     public void Sha1()
     {
         var hash = _sha1(_user).ToLowerHexString();
-        Assert.Equal("3c6cd62c0c7ca868fabfd931a9ca4bdb39cc804f", hash);
+        Assert.Equal("8670e727f763004645ffb82b49e405b486732b7b", hash);
     }
 
     [Fact]
     public void UserInfo_Sha1_UpdateShort_ChangeHash()
     {
         var hash0 = _sha1(_user).ToLowerHexString();
-        _user.ShortNumber = 2;
+        _user.IntNumber = 2;
         var hash1 = _sha1(_user).ToLowerHexString();
 
         Assert.NotEqual(hash0, hash1);
@@ -48,7 +48,7 @@ public class ShortTests
     public void UserInfo_Sha1_UpdateUShort_ChangeHash()
     {
         var hash0 = _sha1(_user).ToLowerHexString();
-        _user.UShortNumber = 1;
+        _user.UIntNumber = 1;
         var hash1 = _sha1(_user).ToLowerHexString();
 
         Assert.NotEqual(hash0, hash1);
@@ -56,7 +56,7 @@ public class ShortTests
 
     private class ThisUser : User
     {
-        public short ShortNumber { get; set; }
-        public ushort UShortNumber { get; set; }
+        public int IntNumber { get; set; }
+        public uint UIntNumber { get; set; }
     }
 }

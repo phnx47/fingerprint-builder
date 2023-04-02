@@ -3,7 +3,7 @@ using System.Security.Cryptography;
 using FingerprintBuilder.Tests.Models;
 using Xunit;
 
-namespace FingerprintBuilder.Tests;
+namespace FingerprintBuilder.Tests.TypeTests;
 
 public class ArrayTests
 {

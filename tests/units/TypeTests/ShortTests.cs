@@ -3,27 +3,27 @@ using System.Security.Cryptography;
 using FingerprintBuilder.Tests.Models;
 using Xunit;
 
-namespace FingerprintBuilder.Tests;
+namespace FingerprintBuilder.Tests.TypeTests;
 
-public class LongTests
+public class ShortTests
 {
     private readonly Func<ThisUser, byte[]> _sha1;
     private readonly ThisUser _user;
 
-    public LongTests()
+    public ShortTests()
     {
         _sha1 = FingerprintBuilder<ThisUser>
             .Create(SHA1.Create())
             .For(p => p.FirstName)
-            .For(p => p.LongNumber)
-            .For(p => p.ULongNumber)
+            .For(p => p.ShortNumber)
+            .For(p => p.UShortNumber)
             .Build();
 
         _user = new ThisUser
         {
             FirstName = "John",
-            LongNumber = -2,
-            ULongNumber = 2,
+            ShortNumber = -2,
+            UShortNumber = 2,
         };
     }
 
@@ -31,24 +31,24 @@ public class LongTests
     public void Sha1()
     {
         var hash = _sha1(_user).ToLowerHexString();
-        Assert.Equal("f6b0bac504d0d966b2b1ea2e0504f2ee661f0d40", hash);
+        Assert.Equal("3c6cd62c0c7ca868fabfd931a9ca4bdb39cc804f", hash);
     }
 
     [Fact]
-    public void UserInfo_Sha1_UpdateLong_ChangeHash()
+    public void UserInfo_Sha1_UpdateShort_ChangeHash()
     {
         var hash0 = _sha1(_user).ToLowerHexString();
-        _user.LongNumber = 2;
+        _user.ShortNumber = 2;
         var hash1 = _sha1(_user).ToLowerHexString();
 
         Assert.NotEqual(hash0, hash1);
     }
 
     [Fact]
-    public void UserInfo_Sha1_UpdateULong_ChangeHash()
+    public void UserInfo_Sha1_UpdateUShort_ChangeHash()
     {
         var hash0 = _sha1(_user).ToLowerHexString();
-        _user.ULongNumber = 1;
+        _user.UShortNumber = 1;
         var hash1 = _sha1(_user).ToLowerHexString();
 
         Assert.NotEqual(hash0, hash1);
@@ -56,7 +56,7 @@ public class LongTests
 
     private class ThisUser : User
     {
-        public long LongNumber { get; set; }
-        public ulong ULongNumber { get; set; }
+        public short ShortNumber { get; set; }
+        public ushort UShortNumber { get; set; }
     }
 }
