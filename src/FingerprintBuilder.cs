@@ -81,8 +81,6 @@ public class FingerprintBuilder<T> : IFingerprintBuilder<T>
                 var value = item.Value(entity);
                 switch (value)
                 {
-                    case null:
-                        break;
                     case bool typedValue:
                         binaryWriter.Write(typedValue);
                         break;
@@ -131,8 +129,6 @@ public class FingerprintBuilder<T> : IFingerprintBuilder<T>
                     case string typedValue:
                         binaryWriter.Write(typedValue);
                         break;
-                    default:
-                        throw new ArgumentException("Unsupported Return Type", item.Key);
                 }
             }
 
