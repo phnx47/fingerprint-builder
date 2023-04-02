@@ -55,7 +55,7 @@ public class CharTests
         Assert.NotEqual(hash0, hash1);
     }
 
-    private class ThisUser : BaseUser
+    private class ThisUser : User
     {
         public char Char { get; set; }
 

@@ -66,7 +66,7 @@ public class ByteTests
         Assert.NotEqual(hash0, hash1);
     }
 
-    private class ThisUser : BaseUser
+    private class ThisUser : User
     {
         public byte ByteNumber { get; set; }
         public sbyte SByteNumber { get; set; }

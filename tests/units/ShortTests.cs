@@ -54,7 +54,7 @@ public class ShortTests
         Assert.NotEqual(hash0, hash1);
     }
 
-    private class ThisUser : BaseUser
+    private class ThisUser : User
     {
         public short ShortNumber { get; set; }
         public ushort UShortNumber { get; set; }

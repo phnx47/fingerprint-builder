@@ -39,7 +39,7 @@ public class DoubleTests
         Assert.NotEqual(hash0, hash1);
     }
 
-    private class ThisUser : BaseUser
+    private class ThisUser : User
     {
         public double Number { get; set; }
     }

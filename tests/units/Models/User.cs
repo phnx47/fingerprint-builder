@@ -1,6 +1,6 @@
 namespace FingerprintBuilder.Tests.Models;
 
-public class BaseUser
+public class User
 {
     public string FirstName { get; set; }
 

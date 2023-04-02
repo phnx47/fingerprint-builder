@@ -7,17 +7,17 @@ namespace FingerprintBuilder.Tests;
 
 public class StringTests
 {
-    private readonly Func<BaseUser, byte[]> _sha1;
-    private readonly BaseUser _user;
+    private readonly Func<User, byte[]> _sha1;
+    private readonly User _user;
 
     public StringTests()
     {
-        _sha1 = FingerprintBuilder<BaseUser>
+        _sha1 = FingerprintBuilder<User>
             .Create(SHA1.Create())
             .For(p => p.FirstName)
             .For(p => p.LastName)
             .Build();
-        _user = new BaseUser { FirstName = "John", LastName = "Smith" };
+        _user = new User { FirstName = "John", LastName = "Smith" };
     }
 
     [Fact]
@@ -31,7 +31,7 @@ public class StringTests
     [Fact]
     public void Sha256()
     {
-        var sha256 = FingerprintBuilder<BaseUser>
+        var sha256 = FingerprintBuilder<User>
             .Create(SHA256.Create())
             .For(p => p.FirstName)
             .For(p => p.LastName)
@@ -76,13 +76,13 @@ public class StringTests
     [Fact]
     public void Sha1_Compare_Create()
     {
-        var sha1A = FingerprintBuilder<BaseUser>
+        var sha1A = FingerprintBuilder<User>
             .Create(SHA1.Create())
             .For(p => p.FirstName)
             .For(p => p.LastName)
             .Build();
 
-        var sha1B = FingerprintBuilder<BaseUser>
+        var sha1B = FingerprintBuilder<User>
             .Create(SHA1.Create().ComputeHash)
             .For(p => p.FirstName)
             .For(p => p.LastName)

@@ -12,7 +12,7 @@ public class ThreadSafeTests
     [Fact]
     public async Task UserInfo_Sha1_LoopThread()
     {
-        var sha1 = FingerprintBuilder<BaseUser>
+        var sha1 = FingerprintBuilder<User>
             .Create(SHA1.Create())
             .For(p => p.FirstName)
             .Build();
@@ -24,7 +24,7 @@ public class ThreadSafeTests
             {
                 for (int i = 0; i < 10000; i++)
                 {
-                    var hash = sha1(new BaseUser { FirstName = Guid.NewGuid().ToString() }).ToLowerHexString();
+                    var hash = sha1(new User { FirstName = Guid.NewGuid().ToString() }).ToLowerHexString();
                     Assert.NotEqual("0000000000000000000000000000000000000000", hash);
                 }
             });

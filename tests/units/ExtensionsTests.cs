@@ -7,11 +7,11 @@ namespace FingerprintBuilder.Tests;
 
 public class ExtensionsTests
 {
-    private readonly Func<BaseUser, byte[]> _sha1;
+    private readonly Func<User, byte[]> _sha1;
 
     public ExtensionsTests()
     {
-        _sha1 = FingerprintBuilder<BaseUser>
+        _sha1 = FingerprintBuilder<User>
             .Create(SHA1.Create())
             .For(p => p.FirstName, true, true)
             .For(p => p.LastName, true, true)
@@ -23,7 +23,7 @@ public class ExtensionsTests
     {
         const string expectedHash = "302ad30676be9e618daed716b3710ab70c1323db";
 
-        var user = new BaseUser { FirstName = "John ", LastName = "Smith " };
+        var user = new User { FirstName = "John ", LastName = "Smith " };
 
         var hash = _sha1(user).ToLowerHexString();
 
@@ -39,14 +39,14 @@ public class ExtensionsTests
     [Fact]
     public void Sha256_ToLower_Trim()
     {
-        var sha256 = FingerprintBuilder<BaseUser>
+        var sha256 = FingerprintBuilder<User>
             .Create(SHA256.Create())
             .For(p => p.FirstName, true, true)
             .For(p => p.LastName, true, true)
             .Build();
 
         const string expectedHash = "fdd11c24f2c3f4cd9e57fbbdf77aa4c3332959fda1f6097a92d6e212aa2a533f";
-        var user = new BaseUser { FirstName = "John", LastName = "Smith " };
+        var user = new User { FirstName = "John", LastName = "Smith " };
 
         var hash = sha256(user).ToLowerHexString();
 
@@ -63,7 +63,7 @@ public class ExtensionsTests
     public void ToLower_Trim_Null()
     {
         const string expectedHash = "a4134a2d9c98e1a5dab785714fee4b84c4fcb364";
-        var user = new BaseUser { FirstName = null, LastName = "Smith " };
+        var user = new User { FirstName = null, LastName = "Smith " };
 
         var hash = _sha1(user).ToLowerHexString();
 

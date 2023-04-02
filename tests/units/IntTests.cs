@@ -54,7 +54,7 @@ public class IntTests
         Assert.NotEqual(hash0, hash1);
     }
 
-    private class ThisUser : BaseUser
+    private class ThisUser : User
     {
         public int IntNumber { get; set; }
         public uint UIntNumber { get; set; }
