@@ -11,4 +11,10 @@ public class CreateTests
     {
         Assert.Throws<ArgumentNullException>(() => FingerprintBuilder<User>.Create(computeHash: null));
     }
+
+    [Fact]
+    public void HashAlgorithm_Null_Throw_ArgumentException()
+    {
+        Assert.Throws<ArgumentException>(() => FingerprintBuilder<User>.Create(hashAlgorithm: null));
+    }
 }
