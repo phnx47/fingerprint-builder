@@ -5,12 +5,12 @@ using Xunit;
 
 namespace FingerprintBuilder.Tests.TypedTests;
 
-public class ArrayTests
+public class ArrStringTests
 {
     private readonly Func<ThisUser, byte[]> _sha1;
     private readonly ThisUser _user;
 
-    public ArrayTests()
+    public ArrStringTests()
     {
         _sha1 = FingerprintBuilder<ThisUser>
             .Create(SHA1.Create())

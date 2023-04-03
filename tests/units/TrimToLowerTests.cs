@@ -5,11 +5,11 @@ using Xunit;
 
 namespace FingerprintBuilder.Tests;
 
-public class ExtensionsTests
+public class TrimToLowerTests
 {
     private readonly Func<User, byte[]> _sha1;
 
-    public ExtensionsTests()
+    public TrimToLowerTests()
     {
         _sha1 = FingerprintBuilder<User>
             .Create(SHA1.Create())

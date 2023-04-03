@@ -1,28 +1,11 @@
 using System;
 using System.Globalization;
 using System.Linq;
-using System.Linq.Expressions;
 
 namespace FingerprintBuilder;
 
 public static class FingerprintBuilderExtensions
 {
-    public static IFingerprintBuilder<T> For<T>(this IFingerprintBuilder<T> builder, Expression<Func<T, string>> expression, bool toLower, bool trim)
-    {
-        var format = (Func<string, string>)(input =>
-        {
-            if (toLower)
-                input = input.ToLowerInvariant();
-
-            if (trim)
-                input = input.Trim();
-
-            return input;
-        });
-
-        return builder.For(expression, input => format(input));
-    }
-
     /// <summary>
     ///     Convert to LowerCase Hexadecimal string
     /// </summary>

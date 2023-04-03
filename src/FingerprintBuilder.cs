@@ -43,6 +43,22 @@ public class FingerprintBuilder<T> : IFingerprintBuilder<T>
 
     public IFingerprintBuilder<T> For<TProperty>(Expression<Func<T, TProperty>> expression) => For(expression, f => f);
 
+    public IFingerprintBuilder<T> For(Expression<Func<T, string>> expression, bool toLower, bool trim)
+    {
+        var format = (Func<string, string>)(input =>
+        {
+            if (toLower)
+                input = input.ToLowerInvariant();
+
+            if (trim)
+                input = input.Trim();
+
+            return input;
+        });
+
+        return For(expression, input => format(input));
+    }
+
     public IFingerprintBuilder<T> For<TProperty>(Expression<Func<T, TProperty>> expression, Expression<Func<TProperty, string>> fingerprint) =>
         For<TProperty, string>(expression, fingerprint);
 
