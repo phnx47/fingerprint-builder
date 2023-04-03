@@ -3,7 +3,7 @@ using System.Security.Cryptography;
 using FingerprintBuilder.Tests.Models;
 using Xunit;
 
-namespace FingerprintBuilder.Tests.TypeTests;
+namespace FingerprintBuilder.Tests.TypedTests;
 
 public class LongTests
 {

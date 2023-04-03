@@ -3,27 +3,27 @@ using System.Security.Cryptography;
 using FingerprintBuilder.Tests.Models;
 using Xunit;
 
-namespace FingerprintBuilder.Tests.TypeTests;
+namespace FingerprintBuilder.Tests.TypedTests;
 
-public class CharTests
+public class IntTests
 {
     private readonly Func<ThisUser, byte[]> _sha1;
     private readonly ThisUser _user;
 
-    public CharTests()
+    public IntTests()
     {
         _sha1 = FingerprintBuilder<ThisUser>
             .Create(SHA1.Create())
             .For(p => p.FirstName)
-            .For(p => p.Char)
-            .For(p => p.ArrChars)
+            .For(p => p.IntNumber)
+            .For(p => p.UIntNumber)
             .Build();
 
         _user = new ThisUser
         {
             FirstName = "John",
-            Char = 'a',
-            ArrChars = new[] { 'a', 'b' }
+            IntNumber = -2,
+            UIntNumber = 2,
         };
     }
 
@@ -31,25 +31,24 @@ public class CharTests
     public void Sha1()
     {
         var hash = _sha1(_user).ToLowerHexString();
-        Assert.Equal("c2969eeda3f16f68058e987e0f0822708837b7a4", hash);
+        Assert.Equal("8670e727f763004645ffb82b49e405b486732b7b", hash);
     }
 
     [Fact]
-    public void UserInfo_Sha1_UpdateChar_ChangeHash()
+    public void UserInfo_Sha1_UpdateShort_ChangeHash()
     {
         var hash0 = _sha1(_user).ToLowerHexString();
-        _user.Char = 'c';
+        _user.IntNumber = 2;
         var hash1 = _sha1(_user).ToLowerHexString();
 
         Assert.NotEqual(hash0, hash1);
     }
 
-
     [Fact]
-    public void UserInfo_Sha1_UpdateCharArray_ChangeHash()
+    public void UserInfo_Sha1_UpdateUShort_ChangeHash()
     {
         var hash0 = _sha1(_user).ToLowerHexString();
-        _user.ArrChars[1] = 'c';
+        _user.UIntNumber = 1;
         var hash1 = _sha1(_user).ToLowerHexString();
 
         Assert.NotEqual(hash0, hash1);
@@ -57,8 +56,7 @@ public class CharTests
 
     private class ThisUser : User
     {
-        public char Char { get; set; }
-
-        public char[] ArrChars { get; set; }
+        public int IntNumber { get; set; }
+        public uint UIntNumber { get; set; }
     }
 }

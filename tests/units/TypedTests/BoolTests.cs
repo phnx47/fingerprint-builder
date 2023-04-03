@@ -3,22 +3,22 @@ using System.Security.Cryptography;
 using FingerprintBuilder.Tests.Models;
 using Xunit;
 
-namespace FingerprintBuilder.Tests.TypeTests;
+namespace FingerprintBuilder.Tests.TypedTests;
 
-public class DoubleTests
+public class BoolTests
 {
     private readonly Func<ThisUser, byte[]> _sha1;
     private readonly ThisUser _user;
 
-    public DoubleTests()
+    public BoolTests()
     {
         _sha1 = FingerprintBuilder<ThisUser>
             .Create(SHA1.Create())
             .For(p => p.FirstName)
-            .For(p => p.Number)
+            .For(p => p.IsActive)
             .Build();
 
-        _user = new ThisUser { FirstName = "John", Number = 2.1d };
+        _user = new ThisUser { FirstName = "John", IsActive = true };
     }
 
     [Fact]
@@ -26,14 +26,14 @@ public class DoubleTests
     {
         var hash = _sha1(_user).ToLowerHexString();
 
-        Assert.Equal("af167d0996599a29b89ce1c467013bb7c98e7dcb", hash);
+        Assert.Equal("fe563bb6a90707c3e2f9c2960a4c96de7d894762", hash);
     }
 
     [Fact]
     public void UserInfo_Sha1_UpdateBool_ChangeHash()
     {
         var hash0 = _sha1(_user).ToLowerHexString();
-        _user.Number = 2.11d;
+        _user.IsActive = false;
         var hash1 = _sha1(_user).ToLowerHexString();
 
         Assert.NotEqual(hash0, hash1);
@@ -41,6 +41,6 @@ public class DoubleTests
 
     private class ThisUser : User
     {
-        public double Number { get; set; }
+        public bool IsActive { get; set; }
     }
 }

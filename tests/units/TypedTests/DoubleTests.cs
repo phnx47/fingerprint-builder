@@ -3,14 +3,14 @@ using System.Security.Cryptography;
 using FingerprintBuilder.Tests.Models;
 using Xunit;
 
-namespace FingerprintBuilder.Tests.TypeTests;
+namespace FingerprintBuilder.Tests.TypedTests;
 
-public class FloatTests
+public class DoubleTests
 {
     private readonly Func<ThisUser, byte[]> _sha1;
     private readonly ThisUser _user;
 
-    public FloatTests()
+    public DoubleTests()
     {
         _sha1 = FingerprintBuilder<ThisUser>
             .Create(SHA1.Create())
@@ -18,7 +18,7 @@ public class FloatTests
             .For(p => p.Number)
             .Build();
 
-        _user = new ThisUser { FirstName = "John", Number = 2.1f };
+        _user = new ThisUser { FirstName = "John", Number = 2.1d };
     }
 
     [Fact]
@@ -26,14 +26,14 @@ public class FloatTests
     {
         var hash = _sha1(_user).ToLowerHexString();
 
-        Assert.Equal("487b230857d43f392b9d20189d972d0cc8aa7c98", hash);
+        Assert.Equal("af167d0996599a29b89ce1c467013bb7c98e7dcb", hash);
     }
 
     [Fact]
     public void UserInfo_Sha1_UpdateBool_ChangeHash()
     {
         var hash0 = _sha1(_user).ToLowerHexString();
-        _user.Number = 2.11f;
+        _user.Number = 2.11d;
         var hash1 = _sha1(_user).ToLowerHexString();
 
         Assert.NotEqual(hash0, hash1);
@@ -41,6 +41,6 @@ public class FloatTests
 
     private class ThisUser : User
     {
-        public float Number { get; set; }
+        public double Number { get; set; }
     }
 }
