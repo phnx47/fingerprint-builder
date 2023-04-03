@@ -58,7 +58,7 @@ public class FingerprintBuilder<T> : IFingerprintBuilder<T>
 
         var returnType = typeof(TReturnType);
         if (!_supportedTypes.Contains(typeof(TReturnType)))
-            throw new ArgumentException($"Unsupported ReturnType: {returnType.Name}", memberName);
+            throw new ArgumentException($"Unsupported Type: {returnType.Name}", memberName);
 
         var getValue = expression.Compile();
         var getFingerprint = fingerprint.Compile();
