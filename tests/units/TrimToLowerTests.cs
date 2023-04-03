@@ -37,6 +37,22 @@ public class TrimToLowerTests
     }
 
     [Fact]
+    public void ToLower_Trim_Null()
+    {
+        const string expectedHash = "a4134a2d9c98e1a5dab785714fee4b84c4fcb364";
+        var user = new User { FirstName = null, LastName = "Smith " };
+
+        var hash = _sha1(user).ToLowerHexString();
+
+        Assert.Equal(expectedHash, hash);
+
+        user.LastName = user.LastName.ToLowerInvariant();
+
+        var hash1 = _sha1(user).ToLowerHexString();
+        Assert.Equal(expectedHash, hash1);
+    }
+
+    [Fact]
     public void Sha256_ToLower_Trim()
     {
         var sha256 = FingerprintBuilder<User>
@@ -56,22 +72,6 @@ public class TrimToLowerTests
         user.LastName = user.LastName.ToLowerInvariant();
 
         var hash1 = sha256(user).ToLowerHexString();
-        Assert.Equal(expectedHash, hash1);
-    }
-
-    [Fact]
-    public void ToLower_Trim_Null()
-    {
-        const string expectedHash = "a4134a2d9c98e1a5dab785714fee4b84c4fcb364";
-        var user = new User { FirstName = null, LastName = "Smith " };
-
-        var hash = _sha1(user).ToLowerHexString();
-
-        Assert.Equal(expectedHash, hash);
-
-        user.LastName = user.LastName.ToLowerInvariant();
-
-        var hash1 = _sha1(user).ToLowerHexString();
         Assert.Equal(expectedHash, hash1);
     }
 }
