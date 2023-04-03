@@ -51,12 +51,14 @@ public class FingerprintBuilder<T> : IFingerprintBuilder<T>
         if (expression.Body is not MemberExpression memberExpression)
             throw new ArgumentException("Expression must be a member expression");
 
+        var memberName = memberExpression.Member.Name;
+
         if (_fingerprints.ContainsKey(memberExpression.Member.Name))
-            throw new ArgumentException($"Member {memberExpression.Member.Name} has already been added");
+            throw new ArgumentException("Member has already been added", memberName);
 
         var returnType = typeof(TReturnType);
         if (!_supportedTypes.Contains(typeof(TReturnType)))
-            throw new ArgumentException($"Unsupported Return Type: {returnType.Name}", memberExpression.Member.Name);
+            throw new ArgumentException($"Unsupported Return Type: {returnType.Name}", memberName);
 
         var getValue = expression.Compile();
         var getFingerprint = fingerprint.Compile();
