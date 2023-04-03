@@ -20,7 +20,7 @@ public class WrongBuildTests
     }
 
     [Fact]
-    public void For_Duplicate_Prop_Throw_ArgumentException()
+    public void For_Prop_Duplicate_Throw_ArgumentException()
     {
         var exception = Assert.Throws<ArgumentException>(() => FingerprintBuilder<User>
             .Create(SHA1.Create())
@@ -28,5 +28,13 @@ public class WrongBuildTests
             .For(p => p.FirstName));
 
         Assert.Equal(nameof(User.FirstName), exception.ParamName);
+    }
+
+    [Fact]
+    public void For_Prop_IsNot_MemberExpression_Throw_ArgumentException()
+    {
+        Assert.Throws<ArgumentException>(() => FingerprintBuilder<User>
+            .Create(SHA1.Create())
+            .For(p => ""));
     }
 }
