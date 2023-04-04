@@ -1,16 +1,15 @@
 using System;
 using System.Linq.Expressions;
 
-namespace FingerprintBuilder
+namespace FingerprintBuilder;
+
+public interface IFingerprintBuilder<T>
 {
-    public interface IFingerprintBuilder<T>
-    {
-        IFingerprintBuilder<T> For<TProperty>(Expression<Func<T, TProperty>> expression);
+    IFingerprintBuilder<T> For<TProperty>(Expression<Func<T, TProperty>> expression);
 
-        IFingerprintBuilder<T> For<TProperty>(Expression<Func<T, TProperty>> expression, Expression<Func<TProperty, string>> fingerprint);
+    IFingerprintBuilder<T> For(Expression<Func<T, string>> expression, bool toLower, bool trim);
 
-        IFingerprintBuilder<T> For<TProperty>(Expression<Func<T, TProperty>> expression, Expression<Func<TProperty, TProperty>> fingerprint);
+    IFingerprintBuilder<T> For<TProperty>(Expression<Func<T, TProperty>> expression, Expression<Func<TProperty, string>> fingerprint);
 
-        Func<T, byte[]> Build();
-    }
+    Func<T, byte[]> Build();
 }

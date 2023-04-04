@@ -1,76 +1,158 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Linq.Expressions;
-using System.Runtime.Serialization.Formatters.Binary;
+using System.Security.Cryptography;
 
-namespace FingerprintBuilder
+namespace FingerprintBuilder;
+
+public class FingerprintBuilder<T> : IFingerprintBuilder<T>
 {
-    public class FingerprintBuilder<T> : IFingerprintBuilder<T>
+    private readonly Func<byte[], byte[]> _computeHash;
+    private readonly IDictionary<string, Func<T, object>> _fingerprints = new SortedDictionary<string, Func<T, object>>(StringComparer.OrdinalIgnoreCase);
+
+    private readonly Type[] _supportedTypes =
     {
-        private readonly Func<byte[], byte[]> _computeHash;
-        private readonly IDictionary<string, Func<T, object>> _fingerprints;
+        typeof(bool),
+        typeof(byte),
+        typeof(sbyte),
+        typeof(byte[]),
+        typeof(char),
+        typeof(char[]),
+        typeof(double),
+        typeof(decimal),
+        typeof(short),
+        typeof(ushort),
+        typeof(int),
+        typeof(uint),
+        typeof(long),
+        typeof(ulong),
+        typeof(float),
+        typeof(string)
+    };
 
-        private FingerprintBuilder(Func<byte[], byte[]> computeHash)
+    private FingerprintBuilder(Func<byte[], byte[]> computeHash)
+    {
+        _computeHash = computeHash ?? throw new ArgumentNullException(nameof(computeHash));
+    }
+
+    public static IFingerprintBuilder<T> Create(HashAlgorithm hashAlgorithm) => Create(hashAlgorithm.ComputeHash);
+
+    public static IFingerprintBuilder<T> Create(Func<byte[], byte[]> computeHash) => new FingerprintBuilder<T>(computeHash);
+
+    public IFingerprintBuilder<T> For<TProperty>(Expression<Func<T, TProperty>> expression) => For(expression, f => f);
+
+    public IFingerprintBuilder<T> For(Expression<Func<T, string>> expression, bool toLower, bool trim)
+    {
+        var format = (Func<string, string>)(input =>
         {
-            _computeHash = computeHash ?? throw new ArgumentNullException(nameof(computeHash));
-            _fingerprints = new SortedDictionary<string, Func<T, object>>(StringComparer.OrdinalIgnoreCase);
-        }
+            if (toLower)
+                input = input.ToLowerInvariant();
 
-        public static IFingerprintBuilder<T> Create(Func<byte[], byte[]> computeHash) =>
-            new FingerprintBuilder<T>(computeHash);
+            if (trim)
+                input = input.Trim();
 
-        public IFingerprintBuilder<T> For<TProperty>(Expression<Func<T, TProperty>> expression) =>
-            For<TProperty>(expression, _ => _);
+            return input;
+        });
 
-        public IFingerprintBuilder<T> For<TProperty>(Expression<Func<T, TProperty>> expression, Expression<Func<TProperty, string>> fingerprint) =>
-            For<TProperty, string>(expression, fingerprint);
+        return For(expression, input => format(input));
+    }
 
-        public IFingerprintBuilder<T> For<TProperty>(Expression<Func<T, TProperty>> expression, Expression<Func<TProperty, TProperty>> fingerprint)
+    public IFingerprintBuilder<T> For<TProperty>(Expression<Func<T, TProperty>> expression, Expression<Func<TProperty, string>> fingerprint) =>
+        For<TProperty, string>(expression, fingerprint);
+
+    private IFingerprintBuilder<T> For<TProperty, TReturnType>(Expression<Func<T, TProperty>> expression, Expression<Func<TProperty, TReturnType>> fingerprint)
+    {
+        if (expression.Body is not MemberExpression memberExpression)
+            throw new ArgumentException("Expression must be a member expression");
+
+        var memberName = memberExpression.Member.Name;
+
+        if (_fingerprints.ContainsKey(memberExpression.Member.Name))
+            throw new ArgumentException("Member has already been added", memberName);
+
+        var returnType = typeof(TReturnType);
+        if (!_supportedTypes.Contains(typeof(TReturnType)))
+            throw new ArgumentException($"Unsupported Type: {returnType.Name}", memberName);
+
+        var getValue = expression.Compile();
+        var getFingerprint = fingerprint.Compile();
+
+        _fingerprints[memberExpression.Member.Name] = entity =>
         {
-            return For<TProperty, TProperty>(expression, fingerprint);
-        }
+            var value = getValue(entity);
+            return value == null ? default : getFingerprint(value);
+        };
 
-        private IFingerprintBuilder<T> For<TProperty, TPropertyType>(Expression<Func<T, TProperty>> expression, Expression<Func<TProperty, TPropertyType>> fingerprint)
+        return this;
+    }
+
+    public Func<T, byte[]> Build()
+    {
+        return entity =>
         {
-            if (!(expression.Body is MemberExpression memberExpression))
-                throw new ArgumentException("Expression must be a member expression");
-
-            if (_fingerprints.ContainsKey(memberExpression.Member.Name))
-                throw new ArgumentException($"Member {memberExpression.Member.Name} has already been added.");
-
-            var getValue = expression.Compile();
-            var getFingerprint = fingerprint.Compile();
-
-            _fingerprints[memberExpression.Member.Name] = obj =>
+            using var memory = new MemoryStream();
+            using var binaryWriter = new BinaryWriter(memory);
+            foreach (var item in _fingerprints)
             {
-                var value = getValue(obj);
-                return value == null ? default : getFingerprint(value);
-            };
-
-            return this;
-        }
-
-        public Func<T, byte[]> Build()
-        {
-            var binaryFormatter = new BinaryFormatter();
-
-            return obj =>
-            {
-                using (var memory = new MemoryStream())
+                var value = item.Value(entity);
+                switch (value)
                 {
-                    foreach (var item in _fingerprints)
-                    {
-                        var graph = item.Value(obj);
-                        if (graph != null)
-                            binaryFormatter.Serialize(memory, graph);
-                    }
-
-                    var arr = memory.ToArray();
-                    lock (_computeHash)
-                        return _computeHash(arr);
+                    case bool typedValue:
+                        binaryWriter.Write(typedValue);
+                        break;
+                    case byte typedValue:
+                        binaryWriter.Write(typedValue);
+                        break;
+                    case sbyte typedValue:
+                        binaryWriter.Write(typedValue);
+                        break;
+                    case byte[] typedValue:
+                        binaryWriter.Write(typedValue);
+                        break;
+                    case char typedValue:
+                        binaryWriter.Write(typedValue);
+                        break;
+                    case char[] typedValue:
+                        binaryWriter.Write(typedValue);
+                        break;
+                    case double typedValue:
+                        binaryWriter.Write(typedValue);
+                        break;
+                    case decimal typedValue:
+                        binaryWriter.Write(typedValue);
+                        break;
+                    case short typedValue:
+                        binaryWriter.Write(typedValue);
+                        break;
+                    case ushort typedValue:
+                        binaryWriter.Write(typedValue);
+                        break;
+                    case int typedValue:
+                        binaryWriter.Write(typedValue);
+                        break;
+                    case uint typedValue:
+                        binaryWriter.Write(typedValue);
+                        break;
+                    case long typedValue:
+                        binaryWriter.Write(typedValue);
+                        break;
+                    case ulong typedValue:
+                        binaryWriter.Write(typedValue);
+                        break;
+                    case float typedValue:
+                        binaryWriter.Write(typedValue);
+                        break;
+                    case string typedValue:
+                        binaryWriter.Write(typedValue);
+                        break;
                 }
-            };
-        }
+            }
+
+            var bytes = memory.ToArray();
+            lock (_computeHash)
+                return _computeHash(bytes);
+        };
     }
 }

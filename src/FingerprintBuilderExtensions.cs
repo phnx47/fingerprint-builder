@@ -1,53 +1,35 @@
 using System;
 using System.Globalization;
 using System.Linq;
-using System.Linq.Expressions;
 
-namespace FingerprintBuilder
+namespace FingerprintBuilder;
+
+public static class FingerprintBuilderExtensions
 {
-    public static class FingerprintBuilderExtensions
+    /// <summary>
+    ///     Convert to LowerCase Hexadecimal string
+    /// </summary>
+    public static string ToLowerHexString(this byte[] source)
     {
-        public static IFingerprintBuilder<T> For<T>(this IFingerprintBuilder<T> builder, Expression<Func<T, string>> expression, bool toLowerCase, bool ignoreWhiteSpace)
-        {
-            var format = (Func<string, string>)(input =>
-            {
-                if (toLowerCase)
-                    input = input.ToLowerInvariant();
+        return source.ToString("x2");
+    }
 
-                if (ignoreWhiteSpace)
-                    input = input.Trim();
+    /// <summary>
+    ///     Convert to UpperCase Hexadecimal string
+    /// </summary>
+    public static string ToUpperHexString(this byte[] source)
+    {
+        return source.ToString("X2");
+    }
 
-                return input;
-            });
+    /// <summary>
+    ///     Convert to string
+    /// </summary>
+    private static string ToString(this byte[] source, string format)
+    {
+        if (source == null)
+            throw new ArgumentNullException(nameof(source));
 
-            return builder.For(expression, input => format(input));
-        }
-
-        /// <summary>
-        ///     Convert to LowerCase Hexadecimal string
-        /// </summary>
-        public static string ToLowerHexString(this byte[] source)
-        {
-            return source.ToString("x2");
-        }
-
-        /// <summary>
-        ///     Convert to UpperCase Hexadecimal string
-        /// </summary>
-        public static string ToUpperHexString(this byte[] source)
-        {
-            return source.ToString("X2");
-        }
-
-        /// <summary>
-        ///     Convert to string
-        /// </summary>
-        private static string ToString(this byte[] source, string format)
-        {
-            if (source == null)
-                throw new ArgumentNullException(nameof(source));
-
-            return string.Join("", source.Select(ch => ch.ToString(format, CultureInfo.InvariantCulture)));
-        }
+        return string.Join("", source.Select(ch => ch.ToString(format, CultureInfo.InvariantCulture)));
     }
 }

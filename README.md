@@ -17,7 +17,7 @@
 Declare class:
 
 ```c#
-class UserInfo
+class User
 {
     public string FirstName { get; set; }
     public string LastName { get; set; }
@@ -27,8 +27,8 @@ class UserInfo
 Configure Func:
 
 ```c#
-var fingerprint = FingerprintBuilder<UserInfo>
-    .Create(SHA256.Create().ComputeHash)
+var sha256 = FingerprintBuilder<User>
+    .Create(SHA256.Create())
     .For(p => p.FirstName)
     .For(p => p.LastName)
     .Build();
@@ -37,29 +37,29 @@ var fingerprint = FingerprintBuilder<UserInfo>
 Get hash:
 
 ```c#
-var user = new UserInfo { FirstName = "John", LastName = "Smith" };
-var hash = fingerprint(user).ToLowerHexString(); // 9996c4bbc1da4938144886b27b7c680e75932b5a56d911754d75ae4e0a9b4f1a
+var user = new User { FirstName = "John", LastName = "Smith" };
+var hash = sha256(user).ToLowerHexString(); // 62565a67bf16004038c502eb68907411fcf7871c66ee01a1aa274cc18d9fb541
 ```
 
 ## Benchmarks
 
 ```ini
-BenchmarkDotNet=v0.12.1, OS=arch
+
+BenchmarkDotNet=v0.13.5, OS=arch
 Intel Core i7-8565U CPU 1.80GHz (Whiskey Lake), 1 CPU, 8 logical and 4 physical cores
-.NET Core SDK=3.1.300
-  [Host]     : .NET Core 3.1.4 (CoreCLR 4.700.20.20201, CoreFX 4.700.20.22101), X64 RyuJIT
-  Job-PCQRMO : .NET Core 3.1.4 (CoreCLR 4.700.20.20201, CoreFX 4.700.20.22101), X64 RyuJIT
+.NET SDK=7.0.103
+  [Host]     : .NET 7.0.3 (7.0.323.12801), X64 RyuJIT AVX2
+  DefaultJob : .NET 7.0.3 (7.0.323.12801), X64 RyuJIT AVX2
 
-Runtime=.NET Core 3.1  IterationCount=50  LaunchCount=2
-RunStrategy=Throughput  WarmupCount=10
 ```
-
 |              Method |     Mean |     Error |    StdDev |      Min |      Max |   Median |
 |-------------------- |---------:|----------:|----------:|---------:|---------:|---------:|
-|    MD5_Model_To_Hex | 4.277 μs | 0.0763 μs | 0.2128 μs | 4.007 μs | 4.612 μs | 4.275 μs |
-|   SHA1_Model_To_Hex | 4.303 μs | 0.0232 μs | 0.0639 μs | 4.178 μs | 4.475 μs | 4.300 μs |
-| SHA256_Model_To_Hex | 5.183 μs | 0.0526 μs | 0.1500 μs | 4.987 μs | 5.627 μs | 5.151 μs |
-| SHA512_Model_To_Hex | 6.842 μs | 0.0688 μs | 0.1908 μs | 6.626 μs | 7.470 μs | 6.795 μs |
+|    MD5_Model_To_Hex | 2.142 μs | 0.0142 μs | 0.0118 μs | 2.125 μs | 2.163 μs | 2.146 μs |
+|   SHA1_Model_To_Hex | 2.379 μs | 0.0155 μs | 0.0121 μs | 2.355 μs | 2.400 μs | 2.384 μs |
+| SHA256_Model_To_Hex | 3.059 μs | 0.0245 μs | 0.0217 μs | 3.031 μs | 3.107 μs | 3.054 μs |
+| SHA512_Model_To_Hex | 4.564 μs | 0.0182 μs | 0.0161 μs | 4.540 μs | 4.598 μs | 4.563 μs |
+
+
 
 ## License
 
