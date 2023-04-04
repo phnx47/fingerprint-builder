@@ -43,20 +43,23 @@ var hash = sha256(user).ToLowerHexString(); // 62565a67bf16004038c502eb68907411f
 
 ## Benchmarks
 
-``` ini
-BenchmarkDotNet=v0.13.2, OS=arch
-Intel Core i7-8565U CPU 1.80GHz (Whiskey Lake), 1 CPU, 8 logical and 4 physical cores
-.NET SDK=7.0.101
-  [Host]     : .NET 7.0.1 (7.0.122.61501), X64 RyuJIT AVX2
-  DefaultJob : .NET 7.0.1 (7.0.122.61501), X64 RyuJIT AVX2
-```
+```ini
 
+BenchmarkDotNet=v0.13.5, OS=arch
+Intel Core i7-8565U CPU 1.80GHz (Whiskey Lake), 1 CPU, 8 logical and 4 physical cores
+.NET SDK=7.0.103
+  [Host]     : .NET 7.0.3 (7.0.323.12801), X64 RyuJIT AVX2
+  DefaultJob : .NET 7.0.3 (7.0.323.12801), X64 RyuJIT AVX2
+
+```
 |              Method |     Mean |     Error |    StdDev |      Min |      Max |   Median |
 |-------------------- |---------:|----------:|----------:|---------:|---------:|---------:|
-|    MD5_Model_To_Hex | 2.113 us | 0.0094 us | 0.0078 us | 2.101 us | 2.130 us | 2.112 us |
-|   SHA1_Model_To_Hex | 2.326 us | 0.0228 us | 0.0190 us | 2.307 us | 2.369 us | 2.320 us |
-| SHA256_Model_To_Hex | 2.996 us | 0.0238 us | 0.0211 us | 2.966 us | 3.044 us | 2.997 us |
-| SHA512_Model_To_Hex | 4.421 us | 0.0243 us | 0.0215 us | 4.390 us | 4.458 us | 4.414 us |
+|    MD5_Model_To_Hex | 2.142 μs | 0.0142 μs | 0.0118 μs | 2.125 μs | 2.163 μs | 2.146 μs |
+|   SHA1_Model_To_Hex | 2.379 μs | 0.0155 μs | 0.0121 μs | 2.355 μs | 2.400 μs | 2.384 μs |
+| SHA256_Model_To_Hex | 3.059 μs | 0.0245 μs | 0.0217 μs | 3.031 μs | 3.107 μs | 3.054 μs |
+| SHA512_Model_To_Hex | 4.564 μs | 0.0182 μs | 0.0161 μs | 4.540 μs | 4.598 μs | 4.563 μs |
+
+
 
 ## License
 
