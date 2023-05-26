@@ -4,7 +4,8 @@ using BenchmarkDotNet.Attributes;
 
 namespace FingerprintBuilder.BenchmarkTests;
 
-[MeanColumn, MinColumn, MaxColumn, MedianColumn]
+[MemoryDiagnoser]
+[MeanColumn, MedianColumn]
 public class ModelToHex
 {
     private Func<UserInfo, byte[]> _md5;

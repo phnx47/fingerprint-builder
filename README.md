@@ -52,14 +52,13 @@ Intel Core i7-8565U CPU 1.80GHz (Whiskey Lake), 1 CPU, 8 logical and 4 physical 
   DefaultJob : .NET 7.0.3 (7.0.323.12801), X64 RyuJIT AVX2
 
 ```
-|              Method |     Mean |     Error |    StdDev |      Min |      Max |   Median |
-|-------------------- |---------:|----------:|----------:|---------:|---------:|---------:|
-|    MD5_Model_To_Hex | 2.142 μs | 0.0142 μs | 0.0118 μs | 2.125 μs | 2.163 μs | 2.146 μs |
-|   SHA1_Model_To_Hex | 2.379 μs | 0.0155 μs | 0.0121 μs | 2.355 μs | 2.400 μs | 2.384 μs |
-| SHA256_Model_To_Hex | 3.059 μs | 0.0245 μs | 0.0217 μs | 3.031 μs | 3.107 μs | 3.054 μs |
-| SHA512_Model_To_Hex | 4.564 μs | 0.0182 μs | 0.0161 μs | 4.540 μs | 4.598 μs | 4.563 μs |
 
-
+|              Method |     Mean |     Error |    StdDev |   Median |   Gen0 | Allocated |
+|-------------------- |---------:|----------:|----------:|---------:|-------:|----------:|
+|    MD5_Model_To_Hex | 2.059 μs | 0.0078 μs | 0.0065 μs | 2.059 μs | 0.3242 |   1.34 KB |
+|   SHA1_Model_To_Hex | 2.248 μs | 0.0117 μs | 0.0097 μs | 2.244 μs | 0.3624 |   1.49 KB |
+| SHA256_Model_To_Hex | 2.933 μs | 0.0155 μs | 0.0138 μs | 2.931 μs | 0.4692 |   1.93 KB |
+| SHA512_Model_To_Hex | 4.578 μs | 0.0176 μs | 0.0156 μs | 4.582 μs | 0.7629 |   3.12 KB |
 
 ## License
 
