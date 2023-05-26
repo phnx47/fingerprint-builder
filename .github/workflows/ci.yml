@@ -63,3 +63,29 @@ jobs:
           name: nupkgs
       - name: 📦 Publish to NuGet
         run: dotnet nuget push "**/*.nupkg" -k ${{ secrets.NUGET_KEY }} -s https://api.nuget.org/v3/index.json
+
+  benchmarks:
+    name: 🐌 Benchmarks
+    if: github.event_name != 'push'
+    runs-on: ubuntu-22.04
+    permissions:
+      pull-requests: write
+    steps:
+      - name: 🚚 Checkout
+        uses: actions/checkout@v3
+      - name: ⚙ Restore
+        run: dotnet restore
+      - name: 🏭 Build
+        run: dotnet build --no-restore -c Release
+      - name: 🐌 Run all benchmarks
+        working-directory: tests/benchmarks
+        run: dotnet run -c Release -- -f *
+      - name: 📝 Add summary
+        working-directory: tests/benchmarks/BenchmarkDotNet.Artifacts/results
+        run: cat FingerprintBuilder.BenchmarkTests.ModelToHex-report-github.md >> $GITHUB_STEP_SUMMARY
+      - name: 💬 Add PR comment
+        uses: marocchino/sticky-pull-request-comment@v2
+        if: github.event_name == 'pull_request'
+        with:
+          recreate: true
+          path: tests/benchmarks/BenchmarkDotNet.Artifacts/results/FingerprintBuilder.BenchmarkTests.ModelToHex-report-github.md
