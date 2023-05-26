@@ -45,21 +45,19 @@ var hash = sha256(user).ToLowerHexString(); // 62565a67bf16004038c502eb68907411f
 
 ```ini
 
-BenchmarkDotNet=v0.13.5, OS=arch
-Intel Core i7-8565U CPU 1.80GHz (Whiskey Lake), 1 CPU, 8 logical and 4 physical cores
-.NET SDK=7.0.103
-  [Host]     : .NET 7.0.3 (7.0.323.12801), X64 RyuJIT AVX2
-  DefaultJob : .NET 7.0.3 (7.0.323.12801), X64 RyuJIT AVX2
-
+BenchmarkDotNet=v0.13.5, OS=ubuntu 22.04
+Intel Xeon Platinum 8272CL CPU 2.60GHz, 1 CPU, 2 logical and 2 physical cores
+.NET SDK=7.0.203
+  [Host]     : .NET 7.0.5 (7.0.523.17405), X64 RyuJIT AVX2
+  DefaultJob : .NET 7.0.5 (7.0.523.17405), X64 RyuJIT AVX2
 ```
-|              Method |     Mean |     Error |    StdDev |      Min |      Max |   Median |
-|-------------------- |---------:|----------:|----------:|---------:|---------:|---------:|
-|    MD5_Model_To_Hex | 2.142 μs | 0.0142 μs | 0.0118 μs | 2.125 μs | 2.163 μs | 2.146 μs |
-|   SHA1_Model_To_Hex | 2.379 μs | 0.0155 μs | 0.0121 μs | 2.355 μs | 2.400 μs | 2.384 μs |
-| SHA256_Model_To_Hex | 3.059 μs | 0.0245 μs | 0.0217 μs | 3.031 μs | 3.107 μs | 3.054 μs |
-| SHA512_Model_To_Hex | 4.564 μs | 0.0182 μs | 0.0161 μs | 4.540 μs | 4.598 μs | 4.563 μs |
 
-
+|              Method |     Mean |     Error |    StdDev |   Median |   Gen0 | Allocated |
+|-------------------- |---------:|----------:|----------:|---------:|-------:|----------:|
+|    MD5_Model_To_Hex | 2.508 μs | 0.0217 μs | 0.0203 μs | 2.497 μs | 0.0725 |   1.34 KB |
+|   SHA1_Model_To_Hex | 2.822 μs | 0.0273 μs | 0.0255 μs | 2.826 μs | 0.0801 |   1.49 KB |
+| SHA256_Model_To_Hex | 3.416 μs | 0.0227 μs | 0.0213 μs | 3.417 μs | 0.1030 |   1.93 KB |
+| SHA512_Model_To_Hex | 5.133 μs | 0.0305 μs | 0.0286 μs | 5.130 μs | 0.1678 |   3.12 KB |
 
 ## License
 
