@@ -25,7 +25,7 @@ jobs:
       - name: 🧪 Run tests
         run: dotnet test --no-build -c Release
       - name: ☢ Publish to Codecov
-        uses: codecov/codecov-action@v3
+        uses: codecov/codecov-action@v4
       - name: 🗜 Pack Dev NuGet artifacts
         if: github.ref == 'refs/heads/main'
         run: dotnet pack --no-build -c Release --version-suffix dev-$(date +%s)-${GITHUB_SHA::7}
