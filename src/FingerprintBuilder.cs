@@ -14,7 +14,7 @@ public class FingerprintBuilder<T> : IFingerprintBuilder<T>
 
     private readonly Type[] _supportedTypes =
     {
-#if HasSystemHalf
+#if HasNewTypes
         typeof(Half),
 #endif
         typeof(bool),
@@ -23,6 +23,8 @@ public class FingerprintBuilder<T> : IFingerprintBuilder<T>
         typeof(byte[]),
         typeof(char),
         typeof(char[]),
+        typeof(string),
+        typeof(float),
         typeof(double),
         typeof(decimal),
         typeof(short),
@@ -30,9 +32,7 @@ public class FingerprintBuilder<T> : IFingerprintBuilder<T>
         typeof(int),
         typeof(uint),
         typeof(long),
-        typeof(ulong),
-        typeof(float),
-        typeof(string)
+        typeof(ulong)
     };
 
     private FingerprintBuilder(Func<byte[], byte[]> computeHash)
@@ -150,7 +150,7 @@ public class FingerprintBuilder<T> : IFingerprintBuilder<T>
                     case string typedValue:
                         binaryWriter.Write(typedValue);
                         break;
-#if HasSystemHalf
+#if HasNewTypes
                     case Half typedValue:
                         binaryWriter.Write(typedValue);
                         break;

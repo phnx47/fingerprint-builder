@@ -7,7 +7,7 @@
     <NoWarn>$(NoWarn);CS0618</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(TargetFramework)' != 'net5.0'">
-    <DefineConstants>$(DefineConstants);HasSystemHalf</DefineConstants>
+    <DefineConstants>$(DefineConstants);HasNewTypes</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.7.2" />

@@ -7,7 +7,7 @@ namespace FingerprintBuilder.Tests.TypedTests;
 
 public class HalfTests
 {
-#if HasSystemHalf
+#if HasNewTypes
     private readonly Func<ThisUser, byte[]> _sha1;
     private readonly ThisUser _user;
 
