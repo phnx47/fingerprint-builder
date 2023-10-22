@@ -2,31 +2,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FingerprintBuilder", "src\FingerprintBuilder.csproj", "{4A63DB87-276C-4FA9-A106-B62DDB222429}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{58083BD6-01D5-4CB8-92A3-06E0CF3D3F90}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{16A1A1CA-A6FB-4C13-AC2A-3545E7D510BD}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "root", "root", "{695542BB-CD7D-4C7E-9209-B283CBE0EE5B}"
-ProjectSection(SolutionItems) = preProject
-	LICENSE = LICENSE
-	README.md = README.md
-	.gitattributes = .gitattributes
-	.gitignore = .gitignore
-	.editorconfig = .editorconfig
-EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{F6951B67-481C-45A2-A9A7-6D3D4CC64213}"
-ProjectSection(SolutionItems) = preProject
-	.github\CODEOWNERS = .github\CODEOWNERS
-	.github\renovate.json = .github\renovate.json
-	.github\FUNDING.yml = .github\FUNDING.yml
-EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{0859450E-9030-4C36-ABF0-5017F31718F5}"
-	ProjectSection(SolutionItems) = preProject
-		.github\workflows\ci.yml = .github\workflows\ci.yml
-	EndProjectSection
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FingerprintBuilder.Tests", "tests\units\FingerprintBuilder.Tests.csproj", "{4D5DE776-DC77-4596-935A-C3833F149F4C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FingerprintBuilder.BenchmarkTests", "tests\benchmarks\FingerprintBuilder.BenchmarkTests.csproj", "{CE2317B3-4DB5-4CB3-BB17-802F3253EF88}"
@@ -51,10 +26,5 @@ Global
 		{CE2317B3-4DB5-4CB3-BB17-802F3253EF88}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{4A63DB87-276C-4FA9-A106-B62DDB222429} = {58083BD6-01D5-4CB8-92A3-06E0CF3D3F90}
-		{F6951B67-481C-45A2-A9A7-6D3D4CC64213} = {695542BB-CD7D-4C7E-9209-B283CBE0EE5B}
-		{0859450E-9030-4C36-ABF0-5017F31718F5} = {F6951B67-481C-45A2-A9A7-6D3D4CC64213}
-		{4D5DE776-DC77-4596-935A-C3833F149F4C} = {16A1A1CA-A6FB-4C13-AC2A-3545E7D510BD}
-		{CE2317B3-4DB5-4CB3-BB17-802F3253EF88} = {16A1A1CA-A6FB-4C13-AC2A-3545E7D510BD}
 	EndGlobalSection
 EndGlobal
