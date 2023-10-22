@@ -1,16 +1,15 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <LangVersion>11.0</LangVersion>
-    <Description>Calculate fingerprint for an object</Description>
+    <Description>Compute hash for specified .NET object</Description>
     <Copyright>2019 © Serge K</Copyright>
-    <VersionPrefix>2.0.0</VersionPrefix>
     <Authors>Serge K</Authors>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFrameworks>netstandard2.0;net6.0</TargetFrameworks>
     <PackageId>FingerprintBuilder</PackageId>
     <PackageTags>fingerprint;hash</PackageTags>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <RepositoryType>git</RepositoryType>
-    <RepositoryUrl>https://github.com/phnx47/fingerprint-builder-net</RepositoryUrl>
+    <RepositoryUrl>https://github.com/phnx47/fingerprint-builder</RepositoryUrl>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <IncludeSymbols>true</IncludeSymbols>
@@ -19,12 +18,15 @@
     <PackageIcon>icon.png</PackageIcon>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageOutputPath>nupkgs</PackageOutputPath>
-    <NoWarn>CS1591</NoWarn>
+    <IsPackable>true</IsPackable>
   </PropertyGroup>
   <ItemGroup>
     <None Include="../icon.png" Pack="true" Visible="false" PackagePath="" />
     <None Include="../README.md" Pack="true" Visible="false" PackagePath="" />
   </ItemGroup>
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'net6.0'">
+    <DefineConstants>$(DefineConstants);HasSystemHalf</DefineConstants>
+  </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All" />
   </ItemGroup>
