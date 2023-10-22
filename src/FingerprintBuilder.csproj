@@ -1,16 +1,15 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <LangVersion>11.0</LangVersion>
-    <Description>Calculate fingerprint for an object</Description>
+    <Description>Compute hash for specified .NET object</Description>
     <Copyright>2019 © Serge K</Copyright>
-    <VersionPrefix>2.0.0</VersionPrefix>
     <Authors>Serge K</Authors>
     <TargetFramework>netstandard2.0</TargetFramework>
     <PackageId>FingerprintBuilder</PackageId>
     <PackageTags>fingerprint;hash</PackageTags>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <RepositoryType>git</RepositoryType>
-    <RepositoryUrl>https://github.com/phnx47/fingerprint-builder-net</RepositoryUrl>
+    <RepositoryUrl>https://github.com/phnx47/fingerprint-builder</RepositoryUrl>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <IncludeSymbols>true</IncludeSymbols>
