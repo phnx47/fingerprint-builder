@@ -14,6 +14,9 @@ public class FingerprintBuilder<T> : IFingerprintBuilder<T>
 
     private readonly Type[] _supportedTypes =
     {
+#if HasSystemHalf
+        typeof(Half),
+#endif
         typeof(bool),
         typeof(byte),
         typeof(sbyte),
@@ -147,6 +150,11 @@ public class FingerprintBuilder<T> : IFingerprintBuilder<T>
                     case string typedValue:
                         binaryWriter.Write(typedValue);
                         break;
+#if HasSystemHalf
+                    case Half typedValue:
+                        binaryWriter.Write(typedValue);
+                        break;
+#endif
                 }
             }
 
