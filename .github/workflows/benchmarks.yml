@@ -9,7 +9,7 @@ on:
 jobs:
   benchmarks:
     name: Benchmarks
-    if: startsWith(github.ref, 'refs/heads/renovate') == false
+    if: startsWith(github.head_ref, 'renovate/') == false
     runs-on: ubuntu-22.04
     permissions:
       pull-requests: write
