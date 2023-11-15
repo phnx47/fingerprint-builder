@@ -40,8 +40,14 @@ public class FingerprintBuilder<T> : IFingerprintBuilder<T>
         _computeHash = computeHash ?? throw new ArgumentNullException(nameof(computeHash));
     }
 
+    /// <summary>
+    ///     Create FingerprintBuilder from HashAlgorithm
+    /// </summary>
     public static IFingerprintBuilder<T> Create(HashAlgorithm hashAlgorithm) => Create(hashAlgorithm.ComputeHash);
 
+    /// <summary>
+    ///     Create FingerprintBuilder from Func
+    /// </summary>
     public static IFingerprintBuilder<T> Create(Func<byte[], byte[]> computeHash) => new FingerprintBuilder<T>(computeHash);
 
     public IFingerprintBuilder<T> For<TProperty>(Expression<Func<T, TProperty>> expression) => For(expression, f => f);

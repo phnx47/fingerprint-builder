@@ -1,6 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <LangVersion>11.0</LangVersion>
     <TargetFramework Condition="'$(OS)' == 'Unix'">net6.0</TargetFramework>
     <TargetFrameworks Condition="'$(OS)' != 'Unix'">net462;net6.0</TargetFrameworks>
     <CollectCoverage>true</CollectCoverage>

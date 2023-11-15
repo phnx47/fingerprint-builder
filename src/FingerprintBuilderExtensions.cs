@@ -22,9 +22,6 @@ public static class FingerprintBuilderExtensions
         return source.ToString("X2");
     }
 
-    /// <summary>
-    ///     Convert to string
-    /// </summary>
     private static string ToString(this byte[] source, string format)
     {
         if (source == null)
