@@ -1,3 +1,4 @@
+#if HasNewTypes
 using System;
 using System.Security.Cryptography;
 using FingerprintBuilder.Tests.Models;
@@ -5,9 +6,9 @@ using Xunit;
 
 namespace FingerprintBuilder.Tests.TypedTests;
 
+
 public class HalfTests
 {
-#if HasNewTypes
     private readonly Func<ThisUser, byte[]> _sha1;
     private readonly ThisUser _user;
 
@@ -38,23 +39,10 @@ public class HalfTests
 
         Assert.NotEqual(hash0, hash1);
     }
-#else
-    [Fact]
-    public void Half_ThrowArgumentException() // Half is not avalaivable in 'netstandard2.*'
-    {
-        var exception = Assert.Throws<ArgumentException>(() => FingerprintBuilder<ThisUser>
-            .Create(SHA1.Create())
-            .For(p => p.FirstName)
-            .For(p => p.Number)
-            .Build());
-
-        Assert.Equal(nameof(ThisUser.Number), exception.ParamName);
-    }
-#endif
-
 
     private class ThisUser : User
     {
         public Half Number { get; set; }
     }
 }
+#endif
