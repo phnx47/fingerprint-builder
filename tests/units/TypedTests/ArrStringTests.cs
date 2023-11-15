@@ -15,7 +15,7 @@ public class ArrStringTests
         _sha1 = FingerprintBuilder<ThisUser>
             .Create(SHA1.Create())
             .For(p => p.FirstName)
-            .For(p => p.Emails, emails => string.Join('|', emails))
+            .For(p => p.Emails, emails => string.Join("|", emails))
             .Build();
         _user = new ThisUser { FirstName = "John", Emails = new[] { "test@test.com" } };
     }
