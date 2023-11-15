@@ -6,13 +6,15 @@
 [![codecov](https://img.shields.io/codecov/c/github/phnx47/fingerprint-builder-net?logo=codecov&style=flat-square&token=RW58OCIQPR)](https://app.codecov.io/gh/phnx47/fingerprint-builder-net)
 [![license](https://img.shields.io/github/license/phnx47/fingerprint-builder-net?style=flat-square)](https://github.com/phnx47/fingerprint-builder-net/blob/main/LICENSE)
 
+Inspired by [he-dev/reusable:FingerprintBuilder](https://github.com/he-dev/reusable/blob/dev/Reusable.Cryptography/src/FingerprintBuilder.cs)
+
 ## Installation
 
 ```sh
  dotnet add package FingerprintBuilder
 ```
 
-## Use
+## How to Use
 
 Declare class:
 
