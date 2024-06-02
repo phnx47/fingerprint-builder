@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework Condition="'$(OS)' == 'Unix'">net6.0</TargetFramework>
-    <TargetFrameworks Condition="'$(OS)' != 'Unix'">net462;net6.0</TargetFrameworks>
+    <TargetFrameworks Condition="'$(OS)' == 'Unix'">net6.0;net8.0</TargetFrameworks>
+    <TargetFrameworks Condition="'$(OS)' != 'Unix'">net462;net6.0;net8.0</TargetFrameworks>
     <CollectCoverage>true</CollectCoverage>
     <CoverletOutputFormat>opencover</CoverletOutputFormat>
     <NoWarn>$(NoWarn);CS0618</NoWarn>
