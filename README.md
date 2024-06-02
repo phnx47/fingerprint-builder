@@ -45,21 +45,19 @@ var hash = sha256(user).ToLowerHexString(); // 62565a67bf16004038c502eb68907411f
 
 ## Benchmarks
 
-```ini
-BenchmarkDotNet v0.13.9+228a464e8be6c580ad9408e98f18813f6407fb5a, Ubuntu 22.04.3 LTS (Jammy Jellyfish)
-Intel Xeon Platinum 8272CL CPU 2.60GHz, 1 CPU, 2 logical and 2 physical cores
-.NET SDK 7.0.402
-  [Host]     : .NET 7.0.12 (7.0.1223.47720), X64 RyuJIT AVX2
-  DefaultJob : .NET 7.0.12 (7.0.1223.47720), X64 RyuJIT AVX2
+```
+BenchmarkDotNet v0.13.12, Ubuntu 24.04 LTS (Noble Numbat)
+AMD EPYC 7763, 1 CPU, 4 logical and 2 physical cores
+.NET SDK 8.0.300
+  [Host]     : .NET 8.0.5 (8.0.524.21615), X64 RyuJIT AVX2
+  DefaultJob : .NET 8.0.5 (8.0.524.21615), X64 RyuJIT AVX2
 ```
 | Method              | Mean     | Error     | StdDev    | Median   | Gen0   | Allocated |
 |-------------------- |---------:|----------:|----------:|---------:|-------:|----------:|
-| MD5_Model_To_Hex    | 2.613 μs | 0.0076 μs | 0.0071 μs | 2.614 μs | 0.0725 |   1.34 KB |
-| SHA1_Model_To_Hex   | 2.910 μs | 0.0172 μs | 0.0161 μs | 2.910 μs | 0.0801 |   1.49 KB |
-| SHA256_Model_To_Hex | 3.540 μs | 0.0064 μs | 0.0053 μs | 3.539 μs | 0.1030 |   1.93 KB |
-| SHA512_Model_To_Hex | 5.449 μs | 0.0173 μs | 0.0153 μs | 5.449 μs | 0.1678 |   3.12 KB |
-
-<!-- Sticky Pull Request Comment -->
+| MD5_Model_To_Hex    | 1.343 μs | 0.0130 μs | 0.0122 μs | 1.340 μs | 0.0801 |   1.34 KB |
+| SHA1_Model_To_Hex   | 1.675 μs | 0.0131 μs | 0.0123 μs | 1.674 μs | 0.0896 |   1.49 KB |
+| SHA256_Model_To_Hex | 2.022 μs | 0.0187 μs | 0.0166 μs | 2.024 μs | 0.1144 |   1.93 KB |
+| SHA512_Model_To_Hex | 2.937 μs | 0.0268 μs | 0.0250 μs | 2.931 μs | 0.1907 |   3.12 KB |
 
 ## License
 
