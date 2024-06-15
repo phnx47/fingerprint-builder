@@ -1,4 +1,4 @@
-#if HasNewTypes
+#if NET6_0_OR_GREATER
 using System;
 using System.Security.Cryptography;
 using FingerprintBuilder.Tests.Models;

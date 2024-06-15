@@ -14,7 +14,7 @@ public class FingerprintBuilder<T> : IFingerprintBuilder<T>
 
     private readonly Type[] _supportedTypes =
     {
-#if HasNewTypes
+#if NET6_0_OR_GREATER
         typeof(Half),
 #endif
         typeof(bool),
@@ -156,7 +156,7 @@ public class FingerprintBuilder<T> : IFingerprintBuilder<T>
                     case string typedValue:
                         binaryWriter.Write(typedValue);
                         break;
-#if HasNewTypes
+#if NET6_0_OR_GREATER
                     case Half typedValue:
                         binaryWriter.Write(typedValue);
                         break;
