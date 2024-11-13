@@ -80,7 +80,7 @@ jobs:
         with:
           name: nupkgs
       - name: Push to GitHub
-        run: dotnet nuget push "**/*.nupkg"  -s https://nuget.pkg.github.com/phnx47/index.json -k ${{ secrets.GH_PKG_PAT }} --skip-duplicate
+        run: dotnet nuget push "**/*.nupkg" -s https://nuget.pkg.github.com/phnx47/index.json -k ${{ secrets.GH_PKG_PAT }}
 
   nuget:
     name: Deploy to NuGet
