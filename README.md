@@ -40,7 +40,8 @@ Get hash:
 
 ```c#
 var user = new User { FirstName = "John", LastName = "Smith" };
-var hash = sha256(user).ToLowerHexString(); // 62565a67bf16004038c502eb68907411fcf7871c66ee01a1aa274cc18d9fb541
+var hash = sha256(user).ToLowerHexString();
+Console.WriteLine(hash); // 62565a67bf16004038c502eb68907411fcf7871c66ee01a1aa274cc18d9fb541
 ```
 
 ## Benchmarks
