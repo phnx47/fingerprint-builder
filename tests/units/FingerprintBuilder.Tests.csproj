@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks Condition="'$(OS)' == 'Unix'">net6.0;net8.0</TargetFrameworks>
-    <TargetFrameworks Condition="'$(OS)' != 'Unix'">net462;net6.0;net8.0</TargetFrameworks>
+    <TargetFramework Condition="'$(OS)' == 'Unix'">net8.0</TargetFramework>
+    <TargetFrameworks Condition="'$(OS)' != 'Unix'">net462;net8.0</TargetFrameworks>
     <CollectCoverage>true</CollectCoverage>
     <CoverletOutputFormat>opencover</CoverletOutputFormat>
     <NoWarn>$(NoWarn);CS0618</NoWarn>
@@ -9,7 +9,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.13.0" />
     <PackageReference Include="xunit" Version="2.9.3" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="2.8.2">
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.8.*">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
