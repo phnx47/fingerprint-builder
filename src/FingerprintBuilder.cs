@@ -10,7 +10,9 @@ namespace FingerprintBuilder;
 public class FingerprintBuilder<T> : IFingerprintBuilder<T>
 {
     private readonly Func<byte[], byte[]> _computeHash;
-    private readonly IDictionary<string, Func<T, object>> _fingerprints = new SortedDictionary<string, Func<T, object>>(StringComparer.OrdinalIgnoreCase);
+
+    private readonly IDictionary<string, Func<T, object>> _fingerprints =
+        new SortedDictionary<string, Func<T, object>>(StringComparer.OrdinalIgnoreCase);
 
     private readonly Type[] _supportedTypes =
     {
@@ -68,10 +70,15 @@ public class FingerprintBuilder<T> : IFingerprintBuilder<T>
         return For(expression, input => format(input));
     }
 
-    public IFingerprintBuilder<T> For<TProperty>(Expression<Func<T, TProperty>> expression, Expression<Func<TProperty, string>> fingerprint) =>
-        For<TProperty, string>(expression, fingerprint);
+    public IFingerprintBuilder<T> For<TProperty>(
+        Expression<Func<T, TProperty>> expression,
+        Expression<Func<TProperty, string>> fingerprint
+    ) => For<TProperty, string>(expression, fingerprint);
 
-    private IFingerprintBuilder<T> For<TProperty, TReturnType>(Expression<Func<T, TProperty>> expression, Expression<Func<TProperty, TReturnType>> fingerprint)
+    private IFingerprintBuilder<T> For<TProperty, TReturnType>(
+        Expression<Func<T, TProperty>> expression,
+        Expression<Func<TProperty, TReturnType>> fingerprint
+    )
     {
         if (expression.Body is not MemberExpression memberExpression)
             throw new ArgumentException("Expression must be a member expression");
