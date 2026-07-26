@@ -45,7 +45,16 @@ public class FingerprintBuilder<T> : IFingerprintBuilder<T>
     /// <summary>
     ///     Create FingerprintBuilder from HashAlgorithm
     /// </summary>
-    public static IFingerprintBuilder<T> Create(HashAlgorithm hashAlgorithm) => Create(hashAlgorithm.ComputeHash);
+    public static IFingerprintBuilder<T> Create(HashAlgorithm hashAlgorithm)
+    {
+        return hashAlgorithm == null
+            ? throw new ArgumentNullException(nameof(hashAlgorithm))
+            : Create(bytes =>
+            {
+                lock (hashAlgorithm)
+                    return hashAlgorithm.ComputeHash(bytes);
+            });
+    }
 
     /// <summary>
     ///     Create FingerprintBuilder from Func
@@ -106,13 +115,15 @@ public class FingerprintBuilder<T> : IFingerprintBuilder<T>
 
     public Func<T, byte[]> Build()
     {
+        var fingerprints = _fingerprints.Values.ToArray();
+
         return entity =>
         {
             using var memory = new MemoryStream();
             using var binaryWriter = new BinaryWriter(memory);
-            foreach (var item in _fingerprints)
+            foreach (var getFingerprint in fingerprints)
             {
-                var value = item.Value(entity);
+                var value = getFingerprint(entity);
                 switch (value)
                 {
                     case bool typedValue:
@@ -172,8 +183,7 @@ public class FingerprintBuilder<T> : IFingerprintBuilder<T>
             }
 
             var bytes = memory.ToArray();
-            lock (_computeHash)
-                return _computeHash(bytes);
+            return _computeHash(bytes);
         };
     }
 }

@@ -47,18 +47,18 @@ Console.WriteLine(hash); // 62565a67bf16004038c502eb68907411fcf7871c66ee01a1aa27
 ## Benchmarks
 
 ```
-BenchmarkDotNet v0.13.12, Ubuntu 24.04 LTS (Noble Numbat)
-AMD EPYC 7763, 1 CPU, 4 logical and 2 physical cores
-.NET SDK 8.0.300
-  [Host]     : .NET 8.0.5 (8.0.524.21615), X64 RyuJIT AVX2
-  DefaultJob : .NET 8.0.5 (8.0.524.21615), X64 RyuJIT AVX2
+BenchmarkDotNet v0.15.8, Linux Ubuntu 24.04.4 LTS (Noble Numbat)
+AMD EPYC 7763 2.45GHz, 1 CPU, 4 logical and 2 physical cores
+.NET SDK 10.0.302
+  [Host]     : .NET 10.0.10 (10.0.10, 10.0.1026.32716), X64 RyuJIT x86-64-v3
+  DefaultJob : .NET 10.0.10 (10.0.10, 10.0.1026.32716), X64 RyuJIT x86-64-v3
 ```
 | Method              | Mean     | Error     | StdDev    | Median   | Gen0   | Allocated |
 |-------------------- |---------:|----------:|----------:|---------:|-------:|----------:|
-| MD5_Model_To_Hex    | 1.343 μs | 0.0130 μs | 0.0122 μs | 1.340 μs | 0.0801 |   1.34 KB |
-| SHA1_Model_To_Hex   | 1.675 μs | 0.0131 μs | 0.0123 μs | 1.674 μs | 0.0896 |   1.49 KB |
-| SHA256_Model_To_Hex | 2.022 μs | 0.0187 μs | 0.0166 μs | 2.024 μs | 0.1144 |   1.93 KB |
-| SHA512_Model_To_Hex | 2.937 μs | 0.0268 μs | 0.0250 μs | 2.931 μs | 0.1907 |   3.12 KB |
+| MD5_Model_To_Hex    | 1.145 μs | 0.0038 μs | 0.0032 μs | 1.144 μs | 0.0725 |   1.21 KB |
+| SHA1_Model_To_Hex   | 1.166 μs | 0.0078 μs | 0.0070 μs | 1.166 μs | 0.0820 |   1.37 KB |
+| SHA256_Model_To_Hex | 1.381 μs | 0.0071 μs | 0.0066 μs | 1.382 μs | 0.1087 |    1.8 KB |
+| SHA512_Model_To_Hex | 2.287 μs | 0.0068 μs | 0.0060 μs | 2.287 μs | 0.1831 |   2.99 KB |
 
 ## License
 
