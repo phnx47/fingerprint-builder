@@ -1,8 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Description>Compute hash for specified .NET object</Description>
-    <Copyright>2019 © Serge K</Copyright>
-    <Authors>Serge K</Authors>
+    <Copyright>2019 © phnx47</Copyright>
+    <Authors>phnx47</Authors>
     <TargetFrameworks>net462;netstandard2.0;net8.0</TargetFrameworks>
     <PackageId>FingerprintBuilder</PackageId>
     <PackageTags>fingerprint;hash</PackageTags>
