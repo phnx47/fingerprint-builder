@@ -14,9 +14,9 @@ public class WrongBuildTests
     }
 
     [Fact]
-    public void HashAlgorithm_Null_Throw_ArgumentException()
+    public void HashAlgorithm_Null_Throw_ArgumentNullException()
     {
-        Assert.Throws<ArgumentException>(() => FingerprintBuilder<User>.Create(hashAlgorithm: null));
+        Assert.Throws<ArgumentNullException>(() => FingerprintBuilder<User>.Create(hashAlgorithm: null));
     }
 
     [Fact]
