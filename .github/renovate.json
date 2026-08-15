@@ -15,6 +15,11 @@
     {
       "automerge": true,
       "extends": ["monorepo:vstest", "monorepo:xunit-dotnet"]
+    },
+    {
+      "matchPackageNames": ["xunit.runner.visualstudio"],
+      "matchCurrentValue": "2.8.*",
+      "enabled": false
     }
   ]
 }
