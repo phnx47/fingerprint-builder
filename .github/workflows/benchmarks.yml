@@ -10,7 +10,7 @@ jobs:
   benchmarks:
     name: Benchmarks
     if: startsWith(github.head_ref, 'renovate/') == false
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-latest
     permissions:
       pull-requests: write
     steps:
